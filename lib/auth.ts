@@ -23,7 +23,4 @@ export const auth = betterAuth({
             },
         },
     },
-    advanced: {
-
-    },
 });
