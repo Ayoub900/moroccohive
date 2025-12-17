@@ -1,0 +1,71 @@
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { LayoutDashboard, Map, Calendar, Mail, LogOut, User } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+
+const navigation = [
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Circuits", href: "/dashboard/circuits", icon: Map },
+    { name: "Trip Requests", href: "/dashboard/trip-requests", icon: Calendar },
+    { name: "Messages", href: "/dashboard/messages", icon: Mail },
+    { name: "Profile", href: "/dashboard/profile", icon: User },
+]
+
+export function Sidebar() {
+    const { user, logout } = useAuth()
+    const pathname = usePathname()
+
+    return (
+        <div className="flex h-screen sticky top-0 left-0 w-64 flex-col bg-sidebar border-r border-sidebar-border">
+            {/* Logo */}
+            <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
+                <Link href="/dashboard" className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
+                        <Map className="h-5 w-5 text-sidebar-primary-foreground" />
+                    </div>
+                    <span className="text-lg font-semibold text-sidebar-foreground">Morocco Tours</span>
+                </Link>
+            </div>
+
+            {/* Navigation */}
+            <nav className="flex-1 space-y-1 px-3 py-4">
+                {navigation.map((item) => {
+                    const Icon = item.icon
+                    const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
+
+                    return (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            className={cn(
+                                "flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
+                                isActive
+                                    ? "bg-secondary/80 text-secondary-foreground"
+                                    : "text-foreground/70 hover:bg-secondary/80 hover:text-secondary-foreground/80"
+                            )}
+                        >
+                            <Icon className="h-5 w-5" />
+                            {item.name}
+                        </Link>
+                    )
+                })}
+            </nav>
+
+            {/* Logout */}
+            <div className="p-3 border-t border-sidebar-border">
+                <p className="text-sidebar-foreground/70 flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium"><User className="h-5 w-5" />{user?.email}</p>
+                <button
+                    onClick={logout}
+                    className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-lg transition-colors"
+                >
+                    <LogOut className="h-5 w-5" />
+                    Logout
+                </button>
+            </div>
+        </div>
+    )
+}
+

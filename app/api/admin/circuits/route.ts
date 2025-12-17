@@ -1,0 +1,79 @@
+import { NextRequest, NextResponse } from "next/server"
+import prisma from "@/lib/prisma"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import { checkRateLimit } from "@/lib/limiter";
+
+export async function GET(request: NextRequest) {
+    try {
+        const rateLimitError = await checkRateLimit("general");
+        if (rateLimitError) return rateLimitError;
+
+        const session = await auth.api.getSession({
+            headers: await headers()
+        });
+
+        if (!session || (session.user as any).role !== "admin") {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        // Fetch all circuits
+        const circuits = await prisma.circuit.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
+        })
+
+        return NextResponse.json(circuits)
+    } catch (error) {
+        console.error("Error fetching circuits:", error)
+        return NextResponse.json({ error: "Failed to fetch circuits" }, { status: 500 })
+    }
+}
+
+export async function POST(request: NextRequest) {
+    try {
+        const session = await auth.api.getSession({
+            headers: await headers()
+        });
+
+        if (!session || (session.user as any).role !== "admin") {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const body = await request.json()
+
+        // Validate required fields
+        if (!body.name || !body.slug || !body.description || !body.duration || !body.price) {
+            return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+        }
+
+        // Create circuit
+        const circuit = await prisma.circuit.create({
+            data: {
+                slug: body.slug,
+                name: body.name,
+                tagline: body.tagline,
+                description: body.description,
+                duration: parseInt(body.duration),
+                category: body.category,
+                price: parseFloat(body.price),
+                images: body.images || [],
+                highlights: body.highlights || [],
+                included: body.included || [],
+                excluded: body.excluded || [],
+                optional: body.optional || [],
+                itineraryGlance: body.itineraryGlance || [],
+                itineraryDetail: body.itineraryDetail || "",
+                mapUrl: body.mapUrl,
+                featured: body.featured || false,
+                active: body.active !== undefined ? body.active : true,
+            },
+        })
+
+        return NextResponse.json(circuit, { status: 201 })
+    } catch (error) {
+        console.error("Error creating circuit:", error)
+        return NextResponse.json({ error: "Failed to create circuit" }, { status: 500 })
+    }
+}

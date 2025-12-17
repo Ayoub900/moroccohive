@@ -1,65 +1,357 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useEffect, useState } from "react"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import Link from "next/link"
+import Image from "next/image"
+import { MapPin, ArrowRight, Star, Shield, Heart, Clock, Mail, Phone, Send, Check } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+
+interface Circuit {
+  id: string
+  slug: string
+  name: string
+  description: string
+  duration: number
+  price: number
+  images: string[]
+  category: string
+}
+
+export default function HomePage() {
+  const [circuits, setCircuits] = useState<Circuit[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Contact Form State
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  })
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  useEffect(() => {
+    fetchFeaturedCircuits()
+  }, [])
+
+  const fetchFeaturedCircuits = async () => {
+    try {
+      const response = await fetch("/api/circuits?featured=true")
+      if (response.ok) {
+        const data = await response.json()
+        setCircuits(data.slice(0, 3))
+      }
+    } catch (error) {
+      console.error("Failed to fetch circuits:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSending(true)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contactForm),
+      })
+
+      if (response.ok) {
+        setSent(true)
+        setContactForm({ name: "", email: "", subject: "", message: "" })
+        setTimeout(() => setSent(false), 5000)
+      } else {
+        console.log(response.status)
+        if (response.status === 429) alert("Too many requests. Please try again later.")
+      }
+    } catch (error) {
+      console.error("Error sending message:", error)
+      alert("Failed to send message.")
+    } finally {
+      setSending(false)
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="min-h-screen bg-background/50 flex flex-col font-sans">
+      <Header />
+
+      <main className="flex-1">
+        {/* Minimal Hero Section */}
+        <section className="relative h-[85vh] flex items-center justify-center bg-foreground overflow-hidden">
+          <div className="absolute inset-0 z-0">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/sahara.jpg"
+              alt="Morocco Desert"
+              fill
+              className="object-cover opacity-60"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
+          </div>
+
+          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center animate-fade-in-up">
+            <span className="inline-block px-3 py-1 rounded-md bg-accent/90 text-accent-foreground text-xs font-semibold uppercase tracking-widest shadow-sm">
+              Morocco
+            </span>
+
+            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight">
+              Designed Journeys <br /> Across the Country
+            </h1>
+
+            <p className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed">
+              From cities to deserts, every route is built with purpose.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground border-0 px-6 h-11 text-base rounded-md font-medium shadow-lg">
+                <Link href="/plan-trip">Start Planning</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="bg-card hover:bg-background/95 text-foreground border-0 px-6 h-11 text-base rounded-md font-medium">
+                <Link href="/circuits">View Circuits</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Philosophy / Intro - Clean & Minimal */}
+        <section className="py-24 bg-card border-b border-border">
+          <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
+            <span className="text-accent font-medium tracking-widest text-xs uppercase">Our Philosophy</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">Authentic & Unforgettable</h2>
+            <p className="text-muted-foreground leading-relaxed font-light">
+              We believe travel is about connection. Our carefully crafted itineraries don&apos;t just show you sights,
+              they immerse you in the vibrant culture, rich history, and warm hospitality that makes Morocco unique.
+            </p>
+          </div>
+        </section>
+
+        {/* Featured Circuits - Floating Cards */}
+        <section className="py-24 bg-background/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row justify-between items-end mb-12 gap-4">
+              <div>
+                <h2 className="text-3xl font-bold text-foreground tracking-tight">Featured Journeys</h2>
+                <p className="text-muted-foreground mt-2 font-light">Popular experiences loved by travelers</p>
+              </div>
+              <Link href="/circuits" className="flex items-center text-accent hover:text-accent/90 font-medium group text-sm">
+                View All Circuits <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {loading ? (
+              <div className="flex justify-center py-20">
+                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce mr-1"></div>
+                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce mr-1 delay-75"></div>
+                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce delay-150"></div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {circuits.map((circuit) => (
+                  <Link key={circuit.id} href={`/circuits/${circuit.slug}`} className="group block h-full">
+                    <div className="bg-card rounded-md overflow-hidden shadow-[0_2px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 h-full flex flex-col transform hover:-translate-y-1">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-background">
+                        {circuit.images[0] ? (
+                          <Image
+                            src={circuit.images[0]}
+                            alt={circuit.name}
+                            fill
+                            className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-gray-400 text-sm">No Image</div>
+                        )}
+                        <div className="absolute top-4 left-4">
+                          <span className="inline-block px-3 py-1 rounded-md bg-accent/10 text-xs font-semibold text-accent tracking-wide shadow-sm">
+                            {circuit.category}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="p-8 flex flex-col flex-1">
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between text-xs font-medium text-muted-foreground uppercase tracking-widest mb-2">
+                            <span>{circuit.duration} Days</span>
+                            <span className="text-primary">From ${circuit.price}</span>
+                          </div>
+                          <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                            {circuit.name}
+                          </h3>
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-6 font-light">
+                          {circuit.description}
+                        </p>
+                        <div className="mt-auto flex items-center text-foreground font-medium text-sm group-hover:translate-x-2 transition-transform duration-300">
+                          Explore <ArrowRight className="ml-2 h-4 w-4 text-primary" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Minimal Why Choose Us */}
+        <section className="py-24 bg-card">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="text-center p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
+                  <Star className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-3">Expertly Curated</h3>
+                <p className="text-muted-foreground leading-relaxed font-light">
+                  Hand-picked accommodations and experiences vetted by our local experts.
+                </p>
+              </div>
+              <div className="text-center p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-3">Peace of Mind</h3>
+                <p className="text-muted-foreground leading-relaxed font-light">
+                  24/7 support throughout your journey and secure booking process.
+                </p>
+              </div>
+              <div className="text-center p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
+                  <Heart className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-3">Local Impact</h3>
+                <p className="text-muted-foreground leading-relaxed font-light">
+                  We work directly with local guides and communities to support sustainable tourism.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section - Clean & Soft */}
+        <section id="contact" className="py-24 bg-background/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <span className="text-accent font-medium tracking-widest text-xs uppercase block mb-4">Get in Touch</span>
+                <h2 className="text-4xl font-bold text-foreground mb-6 tracking-tight">Let&apos;s plan your dream trip</h2>
+                <p className="text-muted-foreground mb-12 font-light leading-relaxed">
+                  Have questions or ready to start planning? Send us a message and our travel experts will get right back to you.
+                </p>
+
+                <div className="space-y-8">
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-full bg-card shadow-sm flex items-center justify-center text-primary mt-1 mr-4">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Email Us</h4>
+                      <p className="text-muted-foreground font-light mt-1">info@moroccohive.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-full bg-card shadow-sm flex items-center justify-center text-primary mt-1 mr-4">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Call Us</h4>
+                      <p className="text-muted-foreground font-light mt-1">+212 123 456 789</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-full bg-card shadow-sm flex items-center justify-center text-primary mt-1 mr-4">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Visit Us</h4>
+                      <p className="text-muted-foreground font-light mt-1">123 Avenue Mohammed V, Marrakech</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Form Card */}
+              <div className="bg-card rounded-xl shadow-[0_20px_40px_rgb(0,0,0,0.06)] p-8 md:p-10 border border-border/50">
+                {sent ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-secondary/10 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Check className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-4">Message Sent!</h3>
+                    <p className="text-muted-foreground">
+                      Thank you for contacting us. We will get back to you shortly.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleContactSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Your Name</Label>
+                      <Input
+                        id="name"
+                        value={contactForm.name}
+                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                        required
+                        placeholder="John Doe"
+                        className="bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={contactForm.email}
+                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                        required
+                        placeholder="john@example.com"
+                        className="bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="subject" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Subject</Label>
+                      <Input
+                        id="subject"
+                        value={contactForm.subject}
+                        onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                        required
+                        placeholder="Trip Inquiry..."
+                        className="bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Message</Label>
+                      <Textarea
+                        id="message"
+                        value={contactForm.message}
+                        onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                        required
+                        placeholder="Tell us about your dream trip..."
+                        className="bg-background border-input min-h-[140px] rounded-md focus:ring-ring focus:border-ring resize-none p-4"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      disabled={sending}
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 rounded-md text-base font-medium shadow-lg mt-2"
+                    >
+                      {sending ? "Sending..." : "Send Message"}
+                    </Button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
-  );
+  )
 }
