@@ -1,9 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+// lib/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'; // Adjust path based on your output
 
-const globalForPrisma = globalThis as unknown as {
-    prisma: PrismaClient | undefined;
-};
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+// Create a global singleton instance of PrismaClient
+const prisma = new PrismaClient({
+    log: ["error"],
+})
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+// In development, store the instance on the global object to prevent hot-reloading issues
+if (process.env.NODE_ENV !== 'production') {
+    globalForPrisma.prisma = prisma;
+}
+
+export default prisma;
