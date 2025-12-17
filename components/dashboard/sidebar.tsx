@@ -14,12 +14,12 @@ const navigation = [
     { name: "Profile", href: "/dashboard/profile", icon: User },
 ]
 
-export function Sidebar() {
+export function SidebarContent() {
     const { user, logout } = useAuth()
     const pathname = usePathname()
 
     return (
-        <div className="flex h-screen sticky top-0 left-0 w-64 flex-col bg-sidebar border-r border-sidebar-border">
+        <div className="flex h-full flex-col bg-sidebar border-r border-sidebar-border">
             {/* Logo */}
             <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
                 <Link href="/dashboard" className="flex items-center gap-2">
@@ -31,7 +31,7 @@ export function Sidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 space-y-1 px-3 py-4">
+            <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
                 {navigation.map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
@@ -56,7 +56,10 @@ export function Sidebar() {
 
             {/* Logout */}
             <div className="p-3 border-t border-sidebar-border">
-                <p className="text-sidebar-foreground/70 flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium"><User className="h-5 w-5" />{user?.email}</p>
+                <div className="mb-2 px-3 py-2 text-sm font-medium text-sidebar-foreground/70 flex items-center gap-3">
+                    <User className="h-4 w-4" />
+                    <span className="truncate">{user?.email}</span>
+                </div>
                 <button
                     onClick={logout}
                     className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-lg transition-colors"
@@ -69,3 +72,10 @@ export function Sidebar() {
     )
 }
 
+export function Sidebar() {
+    return (
+        <div className="hidden lg:flex h-screen sticky top-0 left-0 w-64 flex-col">
+            <SidebarContent />
+        </div>
+    )
+}
