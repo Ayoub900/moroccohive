@@ -5,9 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -73,7 +71,6 @@ model ContactMessage {
   updatedAt DateTime @updatedAt
 }
 
-
 model User {
   id            String    @id @map("_id")
   name          String
@@ -99,7 +96,7 @@ model Session {
   updatedAt DateTime
   ipAddress String?
   userAgent String?
-  userId    String   
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -110,7 +107,7 @@ model Account {
   id                    String    @id @map("_id")
   accountId             String
   providerId            String
-  userId                String    
+  userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
@@ -135,5 +132,4 @@ model Verification {
 
   @@map("verification")
 }
-
 
