@@ -7,7 +7,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, MapPin, Check, X, ArrowLeft, Info, Calendar } from "lucide-react"
+import { Clock, MapPin, Check, X, ArrowLeft, Info, Calendar, Plus } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -279,6 +279,23 @@ export default function CircuitDetailPage() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Optional Activities */}
+                            {circuit.optional && circuit.optional.length > 0 && (
+                                <div className="bg-card rounded-lg p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                                    <h2 className="text-2xl font-semibold text-foreground mb-6">Optional Activities</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {circuit.optional.map((item, index) => (
+                                            <div key={index} className="flex items-center p-4 bg-secondary/5 rounded-lg border border-secondary/20">
+                                                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0 mr-4">
+                                                    <Plus className="w-4 h-4 text-secondary" />
+                                                </div>
+                                                <span className="text-foreground font-medium">{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Sidebar - Floating Soft Card */}
