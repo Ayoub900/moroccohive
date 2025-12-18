@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, Map, Calendar, Mail, LogOut, User } from "lucide-react"
@@ -23,10 +24,14 @@ export function SidebarContent() {
             {/* Logo */}
             <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
                 <Link href="/dashboard" className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-                        <Map className="h-5 w-5 text-sidebar-primary-foreground" />
-                    </div>
-                    <span className="text-lg font-semibold text-sidebar-foreground">Morocco Tours</span>
+                    <Image
+                        src="/logo_1.PNG"
+                        alt="MoroccoHive"
+                        width={180}
+                        height={60}
+                        className="h-16 w-auto object-contain"
+                        priority
+                    />
                 </Link>
             </div>
 
@@ -34,7 +39,9 @@ export function SidebarContent() {
             <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
                 {navigation.map((item) => {
                     const Icon = item.icon
-                    const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
+                    const isActive = item.href === "/dashboard"
+                        ? pathname === "/dashboard"
+                        : pathname === item.href || pathname?.startsWith(item.href + "/")
 
                     return (
                         <Link

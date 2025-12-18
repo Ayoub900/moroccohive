@@ -35,30 +35,55 @@ export default function TripRequestsPage() {
     const [requests, setRequests] = useState<TripRequest[]>([])
     const [selectedRequest, setSelectedRequest] = useState<TripRequest | null>(null)
     const [loading, setLoading] = useState(true)
+    const [loadingMore, setLoadingMore] = useState(false)
     const [statusFilter, setStatusFilter] = useState<string>("all")
     const [searchQuery, setSearchQuery] = useState("")
     const [updating, setUpdating] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [hasMore, setHasMore] = useState(true)
+    const itemsPerPage = 6
 
     useEffect(() => {
-        fetchRequests()
+        // Reset and fetch when filter changes
+        setRequests([])
+        setCurrentPage(1)
+        setHasMore(true)
+        fetchRequests(1, true)
     }, [statusFilter])
 
-    const fetchRequests = async () => {
+    const fetchRequests = async (page: number, isInitial: boolean = false) => {
+        if (isInitial) setLoading(true)
+        else setLoadingMore(true)
+
         try {
             const url = statusFilter === "all"
-                ? "/api/admin/trip-requests"
-                : `/api/admin/trip-requests?status=${statusFilter}`
+                ? `/api/admin/trip-requests?page=${page}&limit=${itemsPerPage}`
+                : `/api/admin/trip-requests?status=${statusFilter}&page=${page}&limit=${itemsPerPage}`
 
             const response = await fetch(url, { credentials: "include" })
 
             if (response.ok) {
                 const data = await response.json()
-                setRequests(data)
+                if (isInitial) {
+                    setRequests(data.tripRequests)
+                } else {
+                    setRequests(prev => [...prev, ...data.tripRequests])
+                }
+                setHasMore(data.pagination.currentPage < data.pagination.pages)
             }
         } catch (error) {
             console.error("Failed to fetch:", error)
         } finally {
             setLoading(false)
+            setLoadingMore(false)
+        }
+    }
+
+    const loadMore = () => {
+        if (!loadingMore && hasMore) {
+            const nextPage = currentPage + 1
+            setCurrentPage(nextPage)
+            fetchRequests(nextPage)
         }
     }
 
@@ -73,7 +98,8 @@ export default function TripRequestsPage() {
             })
 
             if (response.ok) {
-                await fetchRequests()
+                await fetchRequests(1, true)
+                setCurrentPage(1)
                 if (selectedRequest?.id === id) {
                     setSelectedRequest({ ...selectedRequest, status: newStatus })
                 }
@@ -186,6 +212,20 @@ export default function TripRequestsPage() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Load More trigger */}
+                    {hasMore && (
+                        <div className="p-4 flex justify-center">
+                            <Button
+                                variant="ghost"
+                                onClick={loadMore}
+                                disabled={loadingMore}
+                                className="text-muted-foreground"
+                            >
+                                {loadingMore ? "Loading more..." : "Scroll for more or Click to load"}
+                            </Button>
+                        </div>
+                    )}
                 </div>
             )}
 

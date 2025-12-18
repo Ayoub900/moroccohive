@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from "lucide-react"
 
 export function Footer() {
@@ -10,10 +11,15 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Brand */}
                     <div className="space-y-4">
-                        <div className="text-2xl font-bold font-serif">
-                            <span className="text-primary">Morocco</span>
-                            <span className="text-foreground">Hive</span>
-                        </div>
+                        <Link href="/" className="inline-block">
+                            <Image
+                                src="/logo_1.PNG"
+                                alt="MoroccoHive Logo"
+                                width={180}
+                                height={180}
+                                className="h-24 w-auto object-contain"
+                            />
+                        </Link>
                         <p className="text-sm text-muted-foreground">
                             Discover the magic of Morocco with expertly curated tours and unforgettable experiences.
                         </p>
@@ -101,18 +107,10 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="mt-8 pt-8 border-t border-border">
-                    <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div className="flex justify-center items-center space-y-4 md:space-y-0">
                         <p className="text-sm text-muted-foreground">
                             © {currentYear} MoroccoHive. All rights reserved.
                         </p>
-                        <div className="flex space-x-6">
-                            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                                Privacy Policy
-                            </Link>
-                            <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                                Terms of Service
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -17,12 +17,29 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
+        const searchParams = request.nextUrl.searchParams;
+        const page = parseInt(searchParams.get("page") || "1");
+        const limit = parseInt(searchParams.get("limit") || "10");
+        const skip = (page - 1) * limit;
 
-        const messages = await prisma.contactMessage.findMany({
-            orderBy: { createdAt: "desc" },
+        const [messages, total] = await Promise.all([
+            prisma.contactMessage.findMany({
+                skip,
+                take: limit,
+                orderBy: { createdAt: "desc" },
+            }),
+            prisma.contactMessage.count()
+        ]);
+
+        return NextResponse.json({
+            messages,
+            pagination: {
+                total,
+                pages: Math.ceil(total / limit),
+                currentPage: page,
+                limit
+            }
         })
-
-        return NextResponse.json(messages)
     } catch (error) {
         console.error("Error fetching messages:", error)
         return NextResponse.json(

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu, Map } from "lucide-react"
+import Image from "next/image"
 
 export default async function DashboardLayout({
     children,
@@ -31,10 +32,14 @@ export default async function DashboardLayout({
             {/* Mobile Header */}
             <div className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-card">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                        <Map className="h-5 w-5 text-primary-foreground" />
-                    </div>
-                    <span className="text-lg font-semibold text-foreground">Morocco Tours</span>
+                    <Image
+                        src="/logo_1.PNG"
+                        alt="MoroccoHive"
+                        width={180}
+                        height={60}
+                        className="h-12 w-auto object-contain"
+                        priority
+                    />
                 </div>
 
                 <Sheet>

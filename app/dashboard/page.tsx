@@ -35,13 +35,13 @@ export default function DashboardPage() {
             ])
 
             if (circuitsRes.ok) {
-                const circuitsData = await circuitsRes.json()
-                setCircuits(circuitsData)
+                const data = await circuitsRes.json()
+                setCircuits(data.circuits || [])
             }
 
             if (requestsRes.ok) {
-                const requestsData = await requestsRes.json()
-                setTripRequests(requestsData)
+                const data = await requestsRes.json()
+                setTripRequests(data.tripRequests || [])
             }
         } catch (error) {
             console.error("Failed to fetch data:", error)
@@ -50,8 +50,8 @@ export default function DashboardPage() {
         }
     }
 
-    const newRequests = tripRequests.filter((r) => r.status === "new").length
-    const totalRequests = tripRequests.length
+    const newRequests = Array.isArray(tripRequests) ? tripRequests.filter((r) => r.status === "new").length : 0
+    const totalRequests = Array.isArray(tripRequests) ? tripRequests.length : 0
 
     if (loading) {
         return (

@@ -239,7 +239,7 @@ export default function HomePage() {
         <section id="contact" className="py-24 bg-background/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
+              <div className="p-8 md:p-10">
                 <span className="text-accent font-medium tracking-widest text-xs uppercase block mb-4">Get in Touch</span>
                 <h2 className="text-4xl font-bold text-foreground mb-6 tracking-tight">Let&apos;s plan your dream trip</h2>
                 <p className="text-muted-foreground mb-12 font-light leading-relaxed">

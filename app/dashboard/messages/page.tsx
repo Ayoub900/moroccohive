@@ -16,27 +16,48 @@ interface ContactMessage {
 export default function MessagesPage() {
     const [messages, setMessages] = useState<ContactMessage[]>([])
     const [loading, setLoading] = useState(true)
+    const [loadingMore, setLoadingMore] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [hasMore, setHasMore] = useState(true)
+    const itemsPerPage = 10
 
     useEffect(() => {
-        fetchMessages()
+        fetchMessages(1, true)
     }, [])
 
-    const fetchMessages = async () => {
+    const fetchMessages = async (page: number, isInitial: boolean = false) => {
+        if (isInitial) setLoading(true)
+        else setLoadingMore(true)
+
         try {
-            const response = await fetch("/api/admin/messages", {
+            const response = await fetch(`/api/admin/messages?page=${page}&limit=${itemsPerPage}`, {
                 credentials: "include"
             })
 
             if (response.ok) {
                 const data = await response.json()
-                setMessages(data)
+                if (isInitial) {
+                    setMessages(data.messages)
+                } else {
+                    setMessages(prev => [...prev, ...data.messages])
+                }
+                setHasMore(data.pagination.currentPage < data.pagination.pages)
             }
         } catch (error) {
             console.error("Failed to fetch:", error)
         } finally {
             setLoading(false)
+            setLoadingMore(false)
+        }
+    }
+
+    const loadMore = () => {
+        if (!loadingMore && hasMore) {
+            const nextPage = currentPage + 1
+            setCurrentPage(nextPage)
+            fetchMessages(nextPage)
         }
     }
 
@@ -50,7 +71,8 @@ export default function MessagesPage() {
             })
 
             if (response.ok) {
-                fetchMessages()
+                fetchMessages(1, true)
+                setCurrentPage(1)
                 if (selectedMessage?.id === id) {
                     setSelectedMessage(null)
                 }
@@ -68,7 +90,8 @@ export default function MessagesPage() {
                 credentials: "include",
                 body: JSON.stringify({ status: "read" })
             })
-            fetchMessages()
+            fetchMessages(1, true)
+            setCurrentPage(1)
         } catch (error) {
             console.error("Failed to update:", error)
         }
@@ -175,6 +198,19 @@ export default function MessagesPage() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Load More trigger */}
+                    {hasMore && (
+                        <div className="p-4 flex justify-center border-t border-border">
+                            <button
+                                onClick={loadMore}
+                                disabled={loadingMore}
+                                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors disabled:opacity-50"
+                            >
+                                {loadingMore ? "Loading more..." : "Load more messages"}
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 

@@ -17,14 +17,32 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Fetch all circuits
-        const circuits = await prisma.circuit.findMany({
-            orderBy: {
-                createdAt: "desc",
-            },
-        })
+        const searchParams = request.nextUrl.searchParams;
+        const page = parseInt(searchParams.get("page") || "1");
+        const limit = parseInt(searchParams.get("limit") || "10");
+        const skip = (page - 1) * limit;
 
-        return NextResponse.json(circuits)
+        // Fetch paginated circuits
+        const [circuits, total] = await Promise.all([
+            prisma.circuit.findMany({
+                skip,
+                take: limit,
+                orderBy: {
+                    createdAt: "desc",
+                },
+            }),
+            prisma.circuit.count()
+        ]);
+
+        return NextResponse.json({
+            circuits,
+            pagination: {
+                total,
+                pages: Math.ceil(total / limit),
+                currentPage: page,
+                limit
+            }
+        });
     } catch (error) {
         console.error("Error fetching circuits:", error)
         return NextResponse.json({ error: "Failed to fetch circuits" }, { status: 500 })

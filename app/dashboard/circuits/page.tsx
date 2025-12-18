@@ -20,44 +20,30 @@ export default function CircuitsPage() {
     const [circuits, setCircuits] = useState<Circuit[]>([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalCircuits, setTotalCircuits] = useState(0)
+    const itemsPerPage = 8
 
     useEffect(() => {
         fetchCircuits()
-    }, [])
+    }, [currentPage])
 
     const fetchCircuits = async () => {
+        setLoading(true)
         try {
-            const response = await fetch("/api/admin/circuits", {
+            const response = await fetch(`/api/admin/circuits?page=${currentPage}&limit=${itemsPerPage}`, {
                 credentials: "include"
             })
 
             if (response.ok) {
                 const data = await response.json()
-                setCircuits(data)
+                setCircuits(data.circuits)
+                setTotalPages(data.pagination.pages)
+                setTotalCircuits(data.pagination.total)
             }
         } catch (error) {
             console.error("Failed to fetch circuits:", error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const seedData = async () => {
-        setLoading(true)
-        try {
-            const response = await fetch("/api/admin/seed", {
-                method: "POST",
-                credentials: "include"
-            })
-            if (response.ok) {
-                alert("Mock data added successfully!")
-                fetchCircuits()
-            } else {
-                alert("Failed to add mock data")
-            }
-        } catch (error) {
-            console.error("Seed error:", error)
-            alert("Error adding mock data")
         } finally {
             setLoading(false)
         }
@@ -102,9 +88,6 @@ export default function CircuitsPage() {
                     <p className="text-sm text-muted-foreground mt-1">{circuits.length} total circuits</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button onClick={seedData} variant="outline" className="border-border text-primary hover:bg-primary/10">
-                        Add Mock Data
-                    </Button>
                     <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
                         <Link href="/dashboard/circuits/new">
                             <Plus className="mr-2 h-4 w-4" />
@@ -139,7 +122,7 @@ export default function CircuitsPage() {
                     </Button>
                 </div>
             ) : (
-                <div className="bg-card rounded-lg border border-border overflow-hidden">
+                <div className="bg-card rounded-lg border border-border overflow-x-auto">
                     <table className="min-w-full divide-y divide-border">
                         <thead className="bg-muted/50">
                             <tr>
@@ -220,6 +203,69 @@ export default function CircuitsPage() {
                             ))}
                         </tbody>
                     </table>
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="px-6 py-4 flex items-center justify-between border-t border-border bg-muted/30">
+                            <div className="flex-1 flex justify-between sm:hidden">
+                                <Button
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Previous
+                                </Button>
+                                <Button
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Next
+                                </Button>
+                            </div>
+                            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCircuits)}</span> of{" "}
+                                        <span className="font-medium">{totalCircuits}</span> results
+                                    </p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <Button
+                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                        variant="outline"
+                                        size="sm"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <div className="flex items-center gap-1">
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                            <Button
+                                                key={page}
+                                                onClick={() => setCurrentPage(page)}
+                                                variant={currentPage === page ? "default" : "outline"}
+                                                size="sm"
+                                                className="w-8 h-8 p-0"
+                                            >
+                                                {page}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                    <Button
+                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                        disabled={currentPage === totalPages}
+                                        variant="outline"
+                                        size="sm"
+                                    >
+                                        Next
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
