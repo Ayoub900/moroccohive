@@ -241,6 +241,7 @@ export default function EditCircuitPage() {
                         existingImages={formData.images}
                         onImagesAdd={(urls) => setFormData(prev => ({ ...prev, images: [...prev.images, ...urls] }))}
                         onRemoveImage={(idx) => removeFromArray("images", idx)}
+                        max={1}
                     />
                 </div>
 

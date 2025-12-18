@@ -176,7 +176,7 @@ export default function CircuitsPage() {
                                                 </span>
                                             )}
                                             <span className={`px-2 py-1 text-xs font-medium rounded ${circuit.active
-                                                ? "bg-green-500/10 text-green-700 border border-green-500/20"
+                                                ? "bg-green-500/10 text-green-600 border border-green-500/20"
                                                 : "bg-muted text-muted-foreground border border-border"
                                                 }`}>
                                                 {circuit.active ? "Active" : "Inactive"}

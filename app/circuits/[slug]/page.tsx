@@ -220,13 +220,13 @@ export default function CircuitDetailPage() {
                                     <h2 className="text-2xl font-semibold text-foreground mb-8">Itinerary</h2>
                                     <div className="space-y-0 relative">
                                         {/* Timeline line */}
-                                        <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" />
+                                        {/* <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" /> */}
 
                                         {circuit.itineraryGlance.map((day, index) => (
                                             <div key={index} className="relative pl-12 pb-8 last:pb-0 group">
                                                 {/* Dot */}
-                                                <div className="absolute left-0 top-1.5 w-10 h-10 rounded-full bg-card border-4 border-border flex items-center justify-center z-10 group-hover:border-accent/10 transition-colors">
-                                                    <div className="w-3 h-3 rounded-full bg-accent/70" />
+                                                <div className="absolute left-0 top-1.5 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center z-10 group-hover:border-accent/10 transition-colors">
+                                                    <div className="w-3 h-3 rounded-full bg-primary/40" />
                                                 </div>
 
                                                 <div className="flex flex-col">
@@ -404,7 +404,7 @@ export default function CircuitDetailPage() {
                                             <Button
                                                 type="submit"
                                                 disabled={submitting}
-                                                className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-md h-11 text-base font-medium shadow-lg shadow-gray-900/10 mt-4"
+                                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-md h-11 text-base font-medium shadow-lg shadow-gray-900/10 mt-4"
                                             >
                                                 {submitting ? "Sending Request..." : "Request Booking"}
                                             </Button>

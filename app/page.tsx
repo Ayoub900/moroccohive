@@ -86,37 +86,36 @@ export default function HomePage() {
       <Header />
 
       <main className="flex-1">
-        {/* Minimal Hero Section */}
-        <section className="relative h-[85vh] flex items-center justify-center bg-foreground overflow-hidden">
+        {/* Simplified Hero Section */}
+        <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+          {/* Background */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/sahara.jpg"
-              alt="Morocco Desert"
+              src="/hero-bg.png"
+              alt="Morocco Sahara"
               fill
-              className="object-cover opacity-60"
+              className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
+            <div className="absolute inset-0 bg-black/50" />
           </div>
 
-          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center animate-fade-in-up">
-            <span className="inline-block px-3 py-1 rounded-md bg-accent/90 text-accent-foreground text-xs font-semibold uppercase tracking-widest shadow-sm">
-              Morocco
-            </span>
-
-            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight">
-              Designed Journeys <br /> Across the Country
+          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+              Where Every Path <br />
+              Tells a Story
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed">
-              From cities to deserts, every route is built with purpose.
+            <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed max-w-2xl mx-auto mb-10">
+              Bespoke Moroccan journeys designed to connect you with the soul of the country.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground border-0 px-6 h-11 text-base rounded-md font-medium shadow-lg">
-                <Link href="/plan-trip">Start Planning</Link>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-white/90 px-8 h-12 text-base rounded-md font-medium transition-all">
+                <Link href="/plan-trip">Start Your Journey</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="bg-card hover:bg-background/95 text-foreground border-0 px-6 h-11 text-base rounded-md font-medium">
-                <Link href="/circuits">View Circuits</Link>
+              <Button asChild variant="outline" size="lg" className="bg-transparent hover:bg-white/10 text-white/90 border-white/20 px-8 h-12 text-base rounded-md font-medium transition-all">
+                <Link href="/circuits">Explore Circuits</Link>
               </Button>
             </div>
           </div>

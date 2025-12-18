@@ -57,14 +57,14 @@ export default function RegisterPage() {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
-            <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
-                <h1 className="text-3xl font-bold text-center text-slate-900 mb-2">Create Account</h1>
-                <p className="text-center text-slate-600 mb-8">Register as an admin</p>
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+            <div className="w-full max-w-md bg-card border border-border rounded-lg shadow-xl p-8 text-foreground">
+                <h1 className="text-3xl font-bold text-center text-foreground mb-2">Create Account</h1>
+                <p className="text-center text-muted-foreground mb-8">Register as an admin</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">Email</label>
                         <Input
                             type="email"
                             name="email"
@@ -72,11 +72,12 @@ export default function RegisterPage() {
                             onChange={handleChange}
                             placeholder="admin@example.com"
                             required
+                            className="bg-background border-input"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Password</label>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">Password</label>
                         <Input
                             type="password"
                             name="password"
@@ -84,11 +85,12 @@ export default function RegisterPage() {
                             onChange={handleChange}
                             placeholder="••••••••"
                             required
+                            className="bg-background border-input"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Confirm Password</label>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">Confirm Password</label>
                         <Input
                             type="password"
                             name="confirmPassword"
@@ -96,19 +98,20 @@ export default function RegisterPage() {
                             onChange={handleChange}
                             placeholder="••••••••"
                             required
+                            className="bg-background border-input"
                         />
                     </div>
 
-                    {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
+                    {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded text-sm">{error}</div>}
 
-                    <Button type="submit" disabled={loading} className="w-full bg-slate-900 hover:bg-slate-800 text-white">
+                    <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                         {loading ? "Creating account..." : "Register"}
                     </Button>
                 </form>
 
-                <p className="text-center text-slate-600 text-sm mt-6">
+                <p className="text-center text-muted-foreground text-sm mt-6">
                     Already have an account?{" "}
-                    <Link href="/admin/login" className="text-blue-600 hover:underline">
+                    <Link href="/admin/login" className="text-primary hover:underline">
                         Sign in here
                     </Link>
                 </p>

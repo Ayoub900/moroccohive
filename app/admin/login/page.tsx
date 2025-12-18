@@ -45,10 +45,10 @@ export default function LoginPage() {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
             <div className="w-full max-w-md bg-card border border-border rounded-lg shadow-xl p-8">
-                <h1 className="text-3xl font-bold text-center text-foreground mb-2">TechHub Admin</h1>
-                <p className="text-center text-muted-foreground mb-8">Sign in to manage your store</p>
+                <h1 className="text-3xl font-bold text-center text-foreground mb-2">Morocco Hive Admin</h1>
+                <p className="text-center text-muted-foreground mb-8">Sign in to manage your dashboard</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
