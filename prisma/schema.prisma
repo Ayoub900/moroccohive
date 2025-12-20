@@ -15,13 +15,13 @@ datasource db {
 }
 
 model Circuit {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug            String   @unique
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  slug            String     @unique
   name            String
   tagline         String?
   description     String
-  duration        Int      // Number of days
-  category        String   // e.g., "Imperial Cities", "Desert Adventure", "Coastal", "Mountain"
+  duration        Int // Number of days
+  category        String // e.g., "Imperial Cities", "Desert Adventure", "Coastal", "Mountain"
   price           Float
   images          String[]
   highlights      String[] // Key highlights/features
@@ -29,54 +29,53 @@ model Circuit {
   excluded        String[] // Services not included
   optional        String[] // Optional services
   itineraryGlance String[] // Brief day-by-day overview (e.g., "Day 1: Arrival in Marrakech")
-  itineraryDetail String   // Rich text/markdown for detailed itinerary
-  additionalInfo  String?  // Additional rich text content
-  mapUrl          String?  // URL to embedded map or map data
-  featured        Boolean  @default(false)
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  itineraryDetail String // Rich text/markdown for detailed itinerary
+  additionalInfo  String? // Additional rich text content
+  featured        Boolean    @default(false)
+  active          Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   favorites       Favorite[]
 }
 
 model BlogPost {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug        String   @unique
-  title       String
-  content     String   // Rich Text
-  excerpt     String?
-  coverImage  String?
-  author      String?
-  tags        String[]
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug       String   @unique
+  title      String
+  content    String // Rich Text
+  excerpt    String?
+  coverImage String?
+  author     String?
+  tags       String[]
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model TripRequest {
-  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
-  travelStyle           String   // solo, couple, family, group
-  travelDates           String   // Date range or flexible dates
-  arrivalCity           String
-  departureCity         String
-  accommodation         String   // budget, standard, luxury, mixed
-  budget                String   // Budget range
-  adventureActivities   String[] // Selected activities
-  experiences           String[] // Selected experiences
-  importantFactors      String[] // Selected important factors
-  desiredExperiences    String   // Text description
-  transportation        String?  // How to explore (private car, public transport, mix)
-  importantCriteria     String?  // What matters most
-  numberOfTravelers     Int
-  travelerAges          String?  // Age ranges or specific ages
-  extraDetails          String?  // Additional information
-  fullName              String
-  email                 String
-  phone                 String
-  status                String   @default("new") // new, contacted, in-progress, quoted, confirmed, cancelled
-  adminNotes            String?  // Internal notes
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  travelStyle         String // solo, couple, family, group
+  travelDates         String // Date range or flexible dates
+  arrivalCity         String
+  departureCity       String
+  accommodation       String // budget, standard, luxury, mixed
+  budget              String // Budget range
+  adventureActivities String[] // Selected activities
+  experiences         String[] // Selected experiences
+  importantFactors    String[] // Selected important factors
+  desiredExperiences  String // Text description
+  transportation      String? // How to explore (private car, public transport, mix)
+  importantCriteria   String? // What matters most
+  numberOfTravelers   Int
+  travelerAges        String? // Age ranges or specific ages
+  extraDetails        String? // Additional information
+  fullName            String
+  email               String
+  phone               String
+  status              String   @default("new") // new, contacted, in-progress, quoted, confirmed, cancelled
+  adminNotes          String? // Internal notes
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model ContactMessage {
@@ -92,9 +91,9 @@ model ContactMessage {
 }
 
 model User {
-  id            String    @id @map("_id")
+  id            String     @id @map("_id")
   name          String
-  email         String    @unique
+  email         String     @unique
   emailVerified Boolean
   image         String?
   createdAt     DateTime
@@ -103,9 +102,9 @@ model User {
   accounts      Account[]
   favorites     Favorite[]
 
-  password      String?
-  role          String?   @default("user")
-  
+  password String?
+  role     String? @default("user")
+
   @@map("user")
 }
 
@@ -164,4 +163,3 @@ model Verification {
 
   @@map("verification")
 }
-

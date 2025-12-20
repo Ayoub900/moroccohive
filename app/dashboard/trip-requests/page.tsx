@@ -17,6 +17,7 @@ interface TripRequest {
     importantFactors: string[]
     desiredExperiences: string
     numberOfTravelers: number
+    travelerAges: string
     fullName: string
     email: string
     phone: string
@@ -327,6 +328,7 @@ export default function TripRequestsPage() {
                                         <div>
                                             <span className="text-muted-foreground">Travelers:</span>
                                             <p className="text-foreground font-medium">{selectedRequest.numberOfTravelers}</p>
+                                            <p className="text-foreground font-medium">{selectedRequest.travelerAges}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -8,7 +8,7 @@ export function proxy(request: NextRequest) {
     // Protect dashboard routes
     if (request.nextUrl.pathname.startsWith("/dashboard")) {
         if (!sessionToken) {
-            return NextResponse.redirect(new URL("/admin/login", request.url))
+            return NextResponse.redirect(new URL("/login", request.url))
         }
         // Note: Role verification should be done in layout/page server-side or via API call
     }
