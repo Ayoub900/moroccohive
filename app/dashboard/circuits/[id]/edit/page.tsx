@@ -10,6 +10,7 @@ import { ArrowLeft, Save, Plus, X } from "lucide-react"
 import Link from "next/link"
 import { ImageUpload } from "@/components/image-upload"
 import { Switch } from "@/components/ui/switch"
+import { RichTextEditor } from "@/components/rich-text-editor"
 
 export default function EditCircuitPage() {
     const router = useRouter()
@@ -29,6 +30,8 @@ export default function EditCircuitPage() {
         included: [] as string[],
         excluded: [] as string[],
         itineraryGlance: [] as string[],
+        itineraryDetail: "",
+        additionalInfo: "",
         optional: [] as string[],
         mapUrl: "",
         featured: false,
@@ -202,20 +205,15 @@ export default function EditCircuitPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="category">Category *</Label>
-                            <select
+                            <Label htmlFor="category">Categories (comma-separated) *</Label>
+                            <Input
                                 id="category"
                                 value={formData.category}
-                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, category: e.target.value })}
-                                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                placeholder="e.g., Culture, Adventure, Desert"
                                 required
-                            >
-                                <option value="culture">Culture</option>
-                                <option value="adventure">Adventure</option>
-                                <option value="desert">Desert</option>
-                                <option value="coastal">Coastal</option>
-                                <option value="mountain">Mountain</option>
-                            </select>
+                                className="bg-background border-input"
+                            />
                         </div>
 
                         <div className="space-y-2">
@@ -409,6 +407,27 @@ export default function EditCircuitPage() {
                                 ))}
                             </div>
                         )}
+                    </div>
+                </div>
+
+                {/* Rich Text Fields */}
+                <div className="bg-card border border-border rounded-lg p-6 space-y-6">
+                    <div className="space-y-2">
+                        <Label>Detailed Itinerary (Rich Text)</Label>
+                        <RichTextEditor
+                            value={formData.itineraryDetail}
+                            onChange={(val) => setFormData({ ...formData, itineraryDetail: val })}
+                            placeholder="Describe the day-by-day plan in detail..."
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label>Additional Information (e.g., Important Notes)</Label>
+                        <RichTextEditor
+                            value={formData.additionalInfo || ""}
+                            onChange={(val) => setFormData({ ...formData, additionalInfo: val })}
+                            placeholder="Add any other relevant details or travel advice..."
+                        />
                     </div>
                 </div>
 

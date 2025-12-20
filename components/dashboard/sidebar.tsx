@@ -4,12 +4,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { LayoutDashboard, Map, Calendar, Mail, LogOut, User } from "lucide-react"
+import { LayoutDashboard, Map, Calendar, Mail, LogOut, User, FileText } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
 
 const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Circuits", href: "/dashboard/circuits", icon: Map },
+    { name: "Blog", href: "/dashboard/blog", icon: FileText },
     { name: "Trip Requests", href: "/dashboard/trip-requests", icon: Calendar },
     { name: "Messages", href: "/dashboard/messages", icon: Mail },
     { name: "Profile", href: "/dashboard/profile", icon: User },

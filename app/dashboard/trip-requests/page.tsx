@@ -13,6 +13,8 @@ interface TripRequest {
     accommodation: string
     budget: string
     adventureActivities: string[]
+    experiences: string[]
+    importantFactors: string[]
     desiredExperiences: string
     numberOfTravelers: number
     fullName: string
@@ -312,6 +314,16 @@ export default function TripRequestsPage() {
                                                 {selectedRequest.phone}
                                             </a>
                                         </div>
+                                        <div className="pt-2">
+                                            <Button
+                                                onClick={() => window.location.href = `mailto:${selectedRequest.email}?subject=Regarding Your Trip Request to Morocco`}
+                                                size="sm"
+                                                className="w-full bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
+                                            >
+                                                <Mail className="w-4 h-4 mr-2" />
+                                                Contact via Email
+                                            </Button>
+                                        </div>
                                         <div>
                                             <span className="text-muted-foreground">Travelers:</span>
                                             <p className="text-foreground font-medium">{selectedRequest.numberOfTravelers}</p>
@@ -334,9 +346,37 @@ export default function TripRequestsPage() {
                                 </div>
                             )}
 
-                            {/* Experiences */}
+                            {/* Target Experiences */}
+                            {selectedRequest.experiences && selectedRequest.experiences.length > 0 && (
+                                <div>
+                                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">Target Experiences</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedRequest.experiences.map((exp) => (
+                                            <span key={exp} className="px-3 py-1 bg-primary/10 text-primary rounded text-sm border border-primary/20">
+                                                {exp}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Important Factors */}
+                            {selectedRequest.importantFactors && selectedRequest.importantFactors.length > 0 && (
+                                <div>
+                                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">Key Priorities</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedRequest.importantFactors.map((factor) => (
+                                            <span key={factor} className="px-3 py-1 bg-accent/10 text-accent rounded text-sm border border-accent/20">
+                                                {factor}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Desired Experiences (Additional Info) */}
                             <div>
-                                <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">Desired Experiences</h3>
+                                <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">Additional Information</h3>
                                 <p className="text-sm text-foreground bg-muted p-4 rounded-lg border border-border">
                                     {selectedRequest.desiredExperiences}
                                 </p>

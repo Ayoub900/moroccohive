@@ -17,7 +17,7 @@ export default async function DashboardLayout({
     })
 
     if (!session) {
-        redirect("/admin/login")
+        redirect("/login")
     }
 
     if ((session.user as any).role !== "admin") {

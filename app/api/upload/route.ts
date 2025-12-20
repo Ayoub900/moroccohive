@@ -1,8 +1,12 @@
 import { writeFile, mkdir } from "fs/promises"
 import { join } from "path"
 import { type NextRequest, NextResponse } from "next/server"
+import { checkRateLimit } from "@/lib/limiter";
 
 export async function POST(request: NextRequest) {
+    const rateLimitError = await checkRateLimit("strict");
+    if (rateLimitError) return rateLimitError;
+
     try {
         const formData = await request.formData()
         const files = formData.getAll("files") as File[]

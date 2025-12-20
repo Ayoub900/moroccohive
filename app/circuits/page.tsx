@@ -5,7 +5,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import Image from "next/image"
-import { Clock, ArrowRight } from "lucide-react"
+import { Clock, ArrowRight, Heart } from "lucide-react"
+import { FavoriteButton } from "@/components/favorite-button"
 
 interface Circuit {
     id: string
@@ -88,6 +89,9 @@ export default function CircuitsPage() {
                                                     <span className="text-sm">No Image</span>
                                                 </div>
                                             )}
+                                            <div className="absolute top-4 right-4 z-10">
+                                                <FavoriteButton circuitId={circuit.id} />
+                                            </div>
                                             <div className="absolute top-4 left-4">
                                                 <span className="inline-block px-3 py-1 rounded-md bg-white/95 text-xs font-semibold text-gray-700 uppercase tracking-wide shadow-sm border border-gray-100">
                                                     {circuit.category}

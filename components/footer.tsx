@@ -24,15 +24,14 @@ export function Footer() {
                             Discover the magic of Morocco with expertly curated tours and unforgettable experiences.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                <Facebook className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                <Instagram className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                <Twitter className="w-5 h-5" />
-                            </a>
+                            <Link href="https://www.tripadvisor.fr/Profile/moroccohive" target="_blank" className="text-muted-foreground ">
+                                <span className="sr-only">TripAdvisor</span>
+                                <Image src="/link1.svg" alt="TripAdvisor" width={24} height={24} />
+                            </Link>
+                            <Link href="https://www.instagram.com/moroccohive/" target="_blank" className="text-muted-foreground ">
+                                <span className="sr-only">Instagram</span>
+                                <Instagram className="h-5 w-5" />
+                            </Link>
                         </div>
                     </div>
 
@@ -49,7 +48,7 @@ export function Footer() {
                             </li>
                             <li>
                                 <Link href="/circuits" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                                    Our Circuits
+                                    Our Trips
                                 </Link>
                             </li>
                             <li>
@@ -91,14 +90,14 @@ export function Footer() {
                             </li>
                             <li className="flex items-center text-sm text-muted-foreground">
                                 <Phone className="w-4 h-4 mr-2 flex-shrink-0 text-primary" />
-                                <a href="tel:+212123456789" className="hover:text-primary transition-colors">
-                                    +212 123 456 789
+                                <a href="tel:+212634717423" className="hover:text-primary transition-colors">
+                                    +212 634717423
                                 </a>
                             </li>
                             <li className="flex items-center text-sm text-muted-foreground">
                                 <Mail className="w-4 h-4 mr-2 flex-shrink-0 text-primary" />
-                                <a href="mailto:info@moroccohive.com" className="hover:text-primary transition-colors">
-                                    info@moroccohive.com
+                                <a href="mailto:moroccohive@gmail.com" className="hover:text-primary transition-colors">
+                                    moroccohive@gmail.com
                                 </a>
                             </li>
                         </ul>

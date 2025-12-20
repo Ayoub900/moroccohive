@@ -7,9 +7,11 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, MapPin, Check, X, ArrowLeft, Info, Calendar, Plus } from "lucide-react"
+import { Clock, MapPin, Check, X, ArrowLeft, Info, Calendar, Plus, Heart } from "lucide-react"
+import { FavoriteButton } from "@/components/favorite-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { CountryCodeSelect } from "@/components/ui/country-code-select"
 import { Textarea } from "@/components/ui/textarea"
 
 interface Circuit {
@@ -27,6 +29,7 @@ interface Circuit {
     optional: string[]
     itineraryGlance: string[]
     itineraryDetail: string
+    additionalInfo?: string
     mapUrl?: string
     category: string
 }
@@ -44,6 +47,7 @@ export default function CircuitDetailPage() {
         fullName: "",
         email: "",
         phone: "",
+        countryCode: "+212",
         extraDetails: "",
     })
     const [submitting, setSubmitting] = useState(false)
@@ -81,7 +85,7 @@ export default function CircuitDetailPage() {
                 body: JSON.stringify({
                     ...booking,
                     travelStyle: "Custom Circuit",
-                    arrivalCity: "N/A", // Not needed for specific circuit booking
+                    arrivalCity: "N/A",
                     departureCity: "N/A",
                     accommodation: "Standard",
                     budget: "N/A",
@@ -104,6 +108,24 @@ export default function CircuitDetailPage() {
         }
     }
 
+    const renderRichText = (text: string) => {
+        if (!text) return ""
+        return text
+            .replace(/^### (.*?)$/gm, "<h3 class='text-lg font-bold mt-6 mb-4'>$1</h3>")
+            .replace(/^## (.*?)$/gm, "<h2 class='text-xl font-bold mt-8 mb-4'>$1</h2>")
+            .replace(/^# (.*?)$/gm, "<h1 class='text-2xl font-bold mt-10 mb-6'>$1</h1>")
+            .replace(/\*\*(.*?)\*\*/g, "<strong class='font-bold text-foreground'>$1</strong>")
+            .replace(/\*(.*?)\*/g, "<em class='italic'>$1</em>")
+            .replace(/__(.*?)__/g, "<u class='underline'>$1</u>")
+            .replace(/~~(.*?)~~/g, "<s class='line-through'>$1</s>")
+            .replace(/`(.*?)`/g, "<code class='bg-primary/10 text-primary px-1.5 py-0.5 rounded text-sm font-mono'>$1</code>")
+            .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' class='text-primary underline hover:text-primary/80' target='_blank' rel='noopener noreferrer'>$1</a>")
+            .replace(/^> (.*?)$/gm, "<blockquote class='border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-4'>$1</blockquote>")
+            .replace(/\n- /g, "<br />• ")
+            .replace(/\n\d+\. /g, "<br />1. ")
+            .replace(/\n/g, "<br />")
+    }
+
     if (loading) {
         return (
             <div className="min-h-screen bg-background/50 flex flex-col font-sans">
@@ -124,10 +146,10 @@ export default function CircuitDetailPage() {
                 <Header />
                 <main className="flex-1 flex items-center justify-center p-4">
                     <div className="text-center">
-                        <h1 className="text-2xl font-semibold text-foreground mb-2">Circuit Not Found</h1>
+                        <h1 className="text-2xl font-semibold text-foreground mb-2">Trip Not Found</h1>
                         <p className="text-muted-foreground mb-6">{error || "The requested circuit could not be found."}</p>
                         <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-md px-8">
-                            <Link href="/circuits">Back to Circuits</Link>
+                            <Link href="/circuits">Back to Trips</Link>
                         </Button>
                     </div>
                 </main>
@@ -165,15 +187,18 @@ export default function CircuitDetailPage() {
                                 href="/circuits"
                                 className="inline-flex items-center text-white/95 hover:text-white mb-6 transition-colors text-sm font-medium bg-white/10 px-4 py-2 rounded-md border border-white/20 hover:bg-white/20"
                             >
-                                <ArrowLeft className="h-4 w-4 mr-2" /> All Circuits
+                                <ArrowLeft className="h-4 w-4 mr-2" /> All Trips
                             </Link>
                             <div className="space-y-3 animate-fade-in-up">
                                 <span className="inline-block px-4 py-1.5 rounded-md bg-accent/90 backdrop-blur-sm text-accent-foreground text-xs font-semibold uppercase tracking-wider">
                                     {circuit.category}
                                 </span>
-                                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-                                    {circuit.name}
-                                </h1>
+                                <div className="flex items-start justify-between">
+                                    <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+                                        {circuit.name}
+                                    </h1>
+                                    <FavoriteButton circuitId={circuit.id} className="mt-2" />
+                                </div>
                                 {circuit.tagline && (
                                     <p className="text-xl text-white/90 max-w-2xl font-light leading-relaxed">
                                         {circuit.tagline}
@@ -239,12 +264,27 @@ export default function CircuitDetailPage() {
 
                                     {circuit.itineraryDetail && (
                                         <div className="mt-10 pt-8 border-t border-border">
-                                            <h3 className="text-lg font-semibold text-foreground mb-4">Detailed Program</h3>
-                                            <div className="prose prose-gray prose-p:text-muted-foreground prose-p:font-light max-w-none">
-                                                <p className="whitespace-pre-line leading-relaxed">{circuit.itineraryDetail}</p>
-                                            </div>
+                                            <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+                                                <Info className="w-5 h-5 text-accent" />
+                                                Detailed Program
+                                            </h3>
+                                            <div
+                                                className="prose prose-gray max-w-none text-muted-foreground leading-relaxed"
+                                                dangerouslySetInnerHTML={{ __html: renderRichText(circuit.itineraryDetail) }}
+                                            />
                                         </div>
                                     )}
+                                </div>
+                            )}
+
+                            {/* Additional Info */}
+                            {circuit.additionalInfo && (
+                                <div className="bg-card rounded-lg p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                                    <h2 className="text-2xl font-semibold text-foreground mb-6">Important Notes</h2>
+                                    <div
+                                        className="prose prose-gray max-w-none text-muted-foreground leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: renderRichText(circuit.additionalInfo) }}
+                                    />
                                 </div>
                             )}
 
@@ -307,7 +347,7 @@ export default function CircuitDetailPage() {
 
                                     <div className="relative z-10 mb-8">
                                         <div className="text-center">
-                                            <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Total Price</span>
+                                            <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider">From</span>
                                             <div className="flex items-baseline justify-center gap-1 mt-2">
                                                 <span className="text-5xl font-bold text-foreground tracking-tight">${circuit.price}</span>
                                                 <span className="text-muted-foreground font-medium">/ person</span>
@@ -339,10 +379,10 @@ export default function CircuitDetailPage() {
                                             <h3 className="font-semibold text-gray-900 border-b border-gray-100 pb-2 mb-4">Book This Trip</h3>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="travelDates" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travel Dates</Label>
+                                                <Label htmlFor="travelDates" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travel Date</Label>
                                                 <Input
                                                     id="travelDates"
-                                                    placeholder="Preferred dates"
+                                                    type="date"
                                                     value={booking.travelDates}
                                                     onChange={(e) => setBooking({ ...booking, travelDates: e.target.value })}
                                                     required
@@ -377,15 +417,21 @@ export default function CircuitDetailPage() {
 
                                             <div className="space-y-2">
                                                 <Label htmlFor="phone" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Phone</Label>
-                                                <Input
-                                                    id="phone"
-                                                    type="tel"
-                                                    placeholder="+212 600..."
-                                                    value={booking.phone}
-                                                    onChange={(e) => setBooking({ ...booking, phone: e.target.value })}
-                                                    required
-                                                    className="bg-gray-50 border-gray-100 rounded-md focus:ring-orange-200 h-11"
-                                                />
+                                                <div className="flex gap-2">
+                                                    <CountryCodeSelect
+                                                        value={booking.countryCode}
+                                                        onChange={(val) => setBooking({ ...booking, countryCode: val })}
+                                                    />
+                                                    <Input
+                                                        id="phone"
+                                                        type="tel"
+                                                        placeholder="600..."
+                                                        value={booking.phone}
+                                                        onChange={(e) => setBooking({ ...booking, phone: e.target.value })}
+                                                        required
+                                                        className="flex-1 bg-gray-50 border-gray-100 rounded-md focus:ring-orange-200 h-11"
+                                                    />
+                                                </div>
                                             </div>
 
                                             <div className="space-y-2">
@@ -406,7 +452,7 @@ export default function CircuitDetailPage() {
                                                 disabled={submitting}
                                                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-md h-11 text-base font-medium shadow-lg shadow-gray-900/10 mt-4"
                                             >
-                                                {submitting ? "Sending Request..." : "Request Booking"}
+                                                {submitting ? "Sending Request..." : "Request This Trip"}
                                             </Button>
                                         </form>
                                     )}
