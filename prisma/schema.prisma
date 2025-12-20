@@ -31,6 +31,7 @@ model Circuit {
   itineraryGlance String[] // Brief day-by-day overview (e.g., "Day 1: Arrival in Marrakech")
   itineraryDetail String // Rich text/markdown for detailed itinerary
   additionalInfo  String? // Additional rich text content
+  mapUrl          String? // URL to embedded map or map data
   featured        Boolean    @default(false)
   active          Boolean    @default(true)
   createdAt       DateTime   @default(now())
