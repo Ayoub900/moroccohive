@@ -42,7 +42,7 @@ export default function RegisterPage() {
                 role: "user",
             } as any, {
                 onSuccess: () => {
-                    router.push("/dashboard")
+                    router.push("/profile")
                 },
                 onError: (ctx) => {
                     setError(ctx.error.message || "Registration failed")
@@ -70,7 +70,7 @@ export default function RegisterPage() {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="admin@example.com"
+                            placeholder="youremail@example.com"
                             required
                             className="bg-background border-input"
                         />

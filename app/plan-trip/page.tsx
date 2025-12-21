@@ -344,10 +344,10 @@ export default function PlanTripPage() {
                                         <div className="flex flex-col items-center relative flex-1">
                                             <div
                                                 className={`w-12 h-12 rounded-full flex items-center justify-center border-1 transition-all ${isCompleted
-                                                        ? "bg-primary border-primary text-primary-foreground"
-                                                        : isActive
-                                                            ? "bg-primary/10 border-primary text-primary"
-                                                            : "bg-muted border-border text-muted-foreground"
+                                                    ? "bg-primary border-primary text-primary-foreground"
+                                                    : isActive
+                                                        ? "bg-primary/10 border-primary text-primary"
+                                                        : "bg-muted border-border text-muted-foreground"
                                                     }`}
                                             >
                                                 {isCompleted ? <Check className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
@@ -391,8 +391,8 @@ export default function PlanTripPage() {
                                                 type="button"
                                                 onClick={() => setFormData((prev) => ({ ...prev, travelStyle: style.toLowerCase() }))}
                                                 className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${formData.travelStyle === style.toLowerCase()
-                                                        ? "border-primary bg-primary/10 text-primary font-semibold shadow-lg"
-                                                        : "border-border hover:border-primary/50"
+                                                    ? "border-primary bg-primary/10 text-primary font-semibold shadow-lg"
+                                                    : "border-border hover:border-primary/50"
                                                     }`}
                                             >
                                                 <div className="flex justify-center mb-3">
@@ -662,8 +662,8 @@ export default function PlanTripPage() {
                                                 {/* CHANGE: Made circle sizes responsive for mobile */}
                                                 <div
                                                     className={`w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border border-border/50 flex flex-col items-center justify-center transition-all duration-300 ${formData.accommodation === level.name.toLowerCase()
-                                                            ? "bg-primary/5 border-primary shadow-[0_0_20px_rgba(var(--primary),0.1)] scale-110"
-                                                            : "bg-card group-hover:border-primary/30 group-hover:bg-primary/[0.02]"
+                                                        ? "bg-primary/5 border-primary shadow-[0_0_20px_rgba(var(--primary),0.1)] scale-110"
+                                                        : "bg-card group-hover:border-primary/30 group-hover:bg-primary/[0.02]"
                                                         }`}
                                                 >
                                                     <div className="flex mb-2 sm:mb-3">
@@ -719,14 +719,14 @@ export default function PlanTripPage() {
                                                 key={activity.name}
                                                 onClick={() => handleActivityToggle(activity.name)}
                                                 className={`flex flex-col sm:flex-row items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.adventureActivities.includes(activity.name)
-                                                        ? "border-primary bg-primary/5"
-                                                        : "border-border"
+                                                    ? "border-primary bg-primary/5"
+                                                    : "border-border"
                                                     }`}
                                             >
                                                 <div
                                                     className={`w-6 h-6 rounded border-2 flex items-center justify-center mb-3 sm:mb-0 sm:mr-6 shrink-0 transition-colors ${formData.adventureActivities.includes(activity.name)
-                                                            ? "bg-primary border-primary"
-                                                            : "border-muted-foreground/30"
+                                                        ? "bg-primary border-primary"
+                                                        : "border-muted-foreground/30"
                                                         }`}
                                                 >
                                                     {formData.adventureActivities.includes(activity.name) && (
@@ -770,8 +770,8 @@ export default function PlanTripPage() {
                                                     }))
                                                 }}
                                                 className={`group relative cursor-pointer aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${formData.experiences.includes(exp.name)
-                                                        ? "border-primary shadow-lg scale-[1.02]"
-                                                        : "border-transparent hover:border-primary/40"
+                                                    ? "border-primary shadow-lg scale-[1.02]"
+                                                    : "border-transparent hover:border-primary/40"
                                                     }`}
                                             >
                                                 <Image
@@ -788,8 +788,8 @@ export default function PlanTripPage() {
                                                 </div>
                                                 <div
                                                     className={`absolute top-2 right-2 w-5 h-5 rounded-full border border-white/50 flex items-center justify-center transition-all ${formData.experiences.includes(exp.name)
-                                                            ? "bg-primary border-primary scale-110"
-                                                            : "bg-black/20"
+                                                        ? "bg-primary border-primary scale-110"
+                                                        : "bg-black/20"
                                                         }`}
                                                 >
                                                     {formData.experiences.includes(exp.name) && <Check className="w-3 h-3 text-white" />}
@@ -816,14 +816,14 @@ export default function PlanTripPage() {
                                                     }))
                                                 }}
                                                 className={`flex flex-col sm:flex-row items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.importantFactors.includes(factor.name)
-                                                        ? "border-primary bg-primary/5"
-                                                        : "border-border"
+                                                    ? "border-primary bg-primary/5"
+                                                    : "border-border"
                                                     }`}
                                             >
                                                 <div
                                                     className={`w-5 h-5 rounded border-2 flex items-center justify-center mb-3 sm:mb-0 sm:mr-4 shrink-0 transition-colors ${formData.importantFactors.includes(factor.name)
-                                                            ? "bg-primary border-primary"
-                                                            : "border-muted-foreground/30"
+                                                        ? "bg-primary border-primary"
+                                                        : "border-muted-foreground/30"
                                                         }`}
                                                 >
                                                     {formData.importantFactors.includes(factor.name) && <Check className="w-3 h-3 text-white" />}
@@ -879,14 +879,14 @@ export default function PlanTripPage() {
                                 <div>
                                     <label htmlFor="fullName" className="block text-sm font-semibold mb-2">
                                         <User className="inline w-4 h-4 mr-1" />
-                                        Full Name
+                                        Name
                                     </label>
                                     <input
                                         type="text"
                                         id="fullName"
                                         value={formData.fullName}
                                         onChange={(e) => setFormData((prev) => ({ ...prev, fullName: e.target.value }))}
-                                        placeholder="John Doe"
+                                        placeholder=""
                                         className="w-full px-4 h-11 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background"
                                     />
                                     {errors.fullName && <p className="text-sm text-destructive mt-2">{errors.fullName}</p>}
@@ -903,7 +903,7 @@ export default function PlanTripPage() {
                                             id="email"
                                             value={formData.email}
                                             onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                                            placeholder="john@example.com"
+                                            placeholder=""
                                             className="w-full px-4 h-11 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background"
                                         />
                                         {errors.email && <p className="text-sm text-destructive mt-2">{errors.email}</p>}
@@ -924,8 +924,8 @@ export default function PlanTripPage() {
                                                 id="phone"
                                                 value={formData.phone}
                                                 onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
-                                                placeholder="612345678"
-                                                className="flex-1 px-4 h-11 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background"
+                                                placeholder=""
+                                                className="w-full px-4 h-11 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background"
                                             />
                                         </div>
                                         {errors.phone && <p className="text-sm text-destructive mt-2">{errors.phone}</p>}

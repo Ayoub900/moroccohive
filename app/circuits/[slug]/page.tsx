@@ -389,8 +389,25 @@ export default function CircuitDetailPage() {
                                                 <Input
                                                     id="travelDates"
                                                     type="date"
-                                                    value={booking.travelDates}
-                                                    onChange={(e) => setBooking({ ...booking, travelDates: e.target.value })}
+                                                    value={booking.travelDates.split(" to ")[0] || ""}
+                                                    onChange={(e) => {
+                                                        const end = booking.travelDates.split(" to ")[1] || ""
+                                                        setBooking({ ...booking, travelDates: `${e.target.value}${end ? ` to ${end}` : ""}` })
+                                                    }}
+                                                    required
+                                                    className="bg-gray-50 border-gray-100 rounded-md focus:ring-orange-200 h-11"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor="travelDates2" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travel Date</Label>
+                                                <Input
+                                                    id="travelDates2"
+                                                    type="date"
+                                                    value={booking.travelDates.split(" to ")[1] || ""}
+                                                    onChange={(e) => {
+                                                        const start = booking.travelDates.split(" to ")[0] || ""
+                                                        setBooking({ ...booking, travelDates: `${start ? `${start} to ` : ""}${e.target.value}` })
+                                                    }}
                                                     required
                                                     className="bg-gray-50 border-gray-100 rounded-md focus:ring-orange-200 h-11"
                                                 />

@@ -58,7 +58,7 @@ export default function LoginPage() {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="admin@example.com"
+                            placeholder="youremail@example.com"
                             required
                             className="bg-background border-input"
                         />
