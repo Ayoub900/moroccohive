@@ -100,8 +100,8 @@ export function Footer() {
                             </li>
                             <li className="flex items-center text-sm text-muted-foreground">
                                 <Mail className="w-4 h-4 mr-2 flex-shrink-0 text-primary" />
-                                <a href="mailto:moroccohive@gmail.com" className="hover:text-primary transition-colors">
-                                    moroccohive@gmail.com
+                                <a href="mailto:info@moroccohive.com" className="hover:text-primary transition-colors">
+                                    info@moroccohive.com
                                 </a>
                             </li>
                         </ul>
