@@ -385,7 +385,7 @@ export default function CircuitDetailPage() {
                                             <h3 className="font-semibold text-gray-900 border-b border-gray-100 pb-2 mb-4">Book This Trip</h3>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="travelDates" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travel Date</Label>
+                                                <Label htmlFor="travelDates" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Earliest Start Date</Label>
                                                 <Input
                                                     id="travelDates"
                                                     type="date"
@@ -399,7 +399,7 @@ export default function CircuitDetailPage() {
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <Label htmlFor="travelDates2" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travel Date</Label>
+                                                <Label htmlFor="travelDates2" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Latest End Date</Label>
                                                 <Input
                                                     id="travelDates2"
                                                     type="date"
@@ -427,10 +427,10 @@ export default function CircuitDetailPage() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="fullname" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Full Name</Label>
+                                                <Label htmlFor="fullname" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Name</Label>
                                                 <Input
                                                     id="fullname"
-                                                    placeholder="John Doe"
+                                                    placeholder=""
                                                     value={booking.fullName}
                                                     onChange={(e) => setBooking({ ...booking, fullName: e.target.value })}
                                                     required
@@ -448,7 +448,7 @@ export default function CircuitDetailPage() {
                                                     <Input
                                                         id="phone"
                                                         type="tel"
-                                                        placeholder="600..."
+                                                        placeholder=""
                                                         value={booking.phone}
                                                         onChange={(e) => setBooking({ ...booking, phone: e.target.value })}
                                                         required
@@ -462,7 +462,7 @@ export default function CircuitDetailPage() {
                                                 <Input
                                                     id="email"
                                                     type="email"
-                                                    placeholder="john@example.com"
+                                                    placeholder=""
                                                     value={booking.email}
                                                     onChange={(e) => setBooking({ ...booking, email: e.target.value })}
                                                     required
