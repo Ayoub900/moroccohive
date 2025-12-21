@@ -23,6 +23,8 @@ model Circuit {
   duration        Int // Number of days
   category        String // e.g., "Imperial Cities", "Desert Adventure", "Coastal", "Mountain"
   price           Float
+  originalPrice   Float? // Optional original / crossed-out price
+  isFrom          Boolean    @default(false) // Whether the price is a "from" price
   images          String[]
   highlights      String[] // Key highlights/features
   included        String[] // Services included

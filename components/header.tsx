@@ -30,7 +30,6 @@ export function Header() {
         { name: "Trip Ideas", href: "/circuits" },
         { name: "Plan Your Trip", href: "/plan-trip" },
         { name: "Blog", href: "/blog" },
-        { name: "About", href: "/#about" },
         { name: "Contact", href: "/#contact" },
     ]
 
@@ -45,9 +44,9 @@ export function Header() {
                                 <Phone className="w-3 h-3 mr-2" />
                                 +212 634717423
                             </a>
-                            <a href="mailto:moroccohive@gmail.com" className="flex items-center hover:text-primary transition-colors">
+                            <a href="mailto:info@moroccohive.com" className="flex items-center hover:text-primary transition-colors">
                                 <Mail className="w-3 h-3 mr-2" />
-                                moroccohive@gmail.com
+                                info@moroccohive.com
                             </a>
                             <div className="flex items-center">
                                 <MapPin className="w-3 h-3 mr-2" />

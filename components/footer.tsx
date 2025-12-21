@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from "lucide-react"
+import { MapPin, Phone, Mail, Facebook, Instagram, MessageCircle } from "lucide-react"
 
 export function Footer() {
     const currentYear = new Date().getFullYear()
@@ -23,7 +23,7 @@ export function Footer() {
                         <p className="text-sm text-muted-foreground">
                             Discover the magic of Morocco with expertly curated tours and unforgettable experiences.
                         </p>
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-4 align-center">
                             <Link href="https://www.tripadvisor.fr/Profile/moroccohive" target="_blank" className="text-muted-foreground ">
                                 <span className="sr-only">TripAdvisor</span>
                                 <Image src="/link1.svg" alt="TripAdvisor" width={24} height={24} />
@@ -31,6 +31,10 @@ export function Footer() {
                             <Link href="https://www.instagram.com/moroccohive/" target="_blank" className="text-muted-foreground ">
                                 <span className="sr-only">Instagram</span>
                                 <Instagram className="h-5 w-5" />
+                            </Link>
+                            <Link href="https://wa.me/212634717423" target="_blank" className="text-muted-foreground ">
+                                <span className="sr-only">Whatsapp</span>
+                                <MessageCircle className="h-5 w-5" />
                             </Link>
                         </div>
                     </div>

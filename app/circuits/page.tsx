@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import Link from "next/link"
 import Image from "next/image"
 import { Clock, ArrowRight, Heart } from "lucide-react"
+import { PriceBadge } from "@/components/ui/price-badge"
 import { FavoriteButton } from "@/components/favorite-button"
 
 interface Circuit {
@@ -16,6 +17,8 @@ interface Circuit {
     description: string
     duration: number
     price: number
+    originalPrice?: number
+    isFrom?: boolean
     images: string[]
     highlights: string[]
     category: string
@@ -103,7 +106,7 @@ export default function CircuitsPage() {
                                             <div className="mb-4">
                                                 <div className="flex items-center justify-between text-xs font-medium text-gray-400 uppercase tracking-widest mb-2">
                                                     <span>{circuit.duration} Days</span>
-                                                    <span className="text-orange-400">From ${circuit.price}</span>
+                                                    <PriceBadge price={circuit.price} originalPrice={circuit.originalPrice} from={!!circuit.isFrom} />
                                                 </div>
                                                 <h3 className="text-2xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors leading-tight">
                                                     {circuit.name}

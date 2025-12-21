@@ -1633,11 +1633,13 @@ export namespace Prisma {
   export type CircuitAvgAggregateOutputType = {
     duration: number | null
     price: number | null
+    originalPrice: number | null
   }
 
   export type CircuitSumAggregateOutputType = {
     duration: number | null
     price: number | null
+    originalPrice: number | null
   }
 
   export type CircuitMinAggregateOutputType = {
@@ -1649,6 +1651,8 @@ export namespace Prisma {
     duration: number | null
     category: string | null
     price: number | null
+    originalPrice: number | null
+    isFrom: boolean | null
     itineraryDetail: string | null
     additionalInfo: string | null
     mapUrl: string | null
@@ -1667,6 +1671,8 @@ export namespace Prisma {
     duration: number | null
     category: string | null
     price: number | null
+    originalPrice: number | null
+    isFrom: boolean | null
     itineraryDetail: string | null
     additionalInfo: string | null
     mapUrl: string | null
@@ -1685,6 +1691,8 @@ export namespace Prisma {
     duration: number
     category: number
     price: number
+    originalPrice: number
+    isFrom: number
     images: number
     highlights: number
     included: number
@@ -1705,11 +1713,13 @@ export namespace Prisma {
   export type CircuitAvgAggregateInputType = {
     duration?: true
     price?: true
+    originalPrice?: true
   }
 
   export type CircuitSumAggregateInputType = {
     duration?: true
     price?: true
+    originalPrice?: true
   }
 
   export type CircuitMinAggregateInputType = {
@@ -1721,6 +1731,8 @@ export namespace Prisma {
     duration?: true
     category?: true
     price?: true
+    originalPrice?: true
+    isFrom?: true
     itineraryDetail?: true
     additionalInfo?: true
     mapUrl?: true
@@ -1739,6 +1751,8 @@ export namespace Prisma {
     duration?: true
     category?: true
     price?: true
+    originalPrice?: true
+    isFrom?: true
     itineraryDetail?: true
     additionalInfo?: true
     mapUrl?: true
@@ -1757,6 +1771,8 @@ export namespace Prisma {
     duration?: true
     category?: true
     price?: true
+    originalPrice?: true
+    isFrom?: true
     images?: true
     highlights?: true
     included?: true
@@ -1868,6 +1884,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice: number | null
+    isFrom: boolean
     images: string[]
     highlights: string[]
     included: string[]
@@ -1911,6 +1929,8 @@ export namespace Prisma {
     duration?: boolean
     category?: boolean
     price?: boolean
+    originalPrice?: boolean
+    isFrom?: boolean
     images?: boolean
     highlights?: boolean
     included?: boolean
@@ -1939,6 +1959,8 @@ export namespace Prisma {
     duration?: boolean
     category?: boolean
     price?: boolean
+    originalPrice?: boolean
+    isFrom?: boolean
     images?: boolean
     highlights?: boolean
     included?: boolean
@@ -1954,7 +1976,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CircuitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "tagline" | "description" | "duration" | "category" | "price" | "images" | "highlights" | "included" | "excluded" | "optional" | "itineraryGlance" | "itineraryDetail" | "additionalInfo" | "mapUrl" | "featured" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["circuit"]>
+  export type CircuitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "tagline" | "description" | "duration" | "category" | "price" | "originalPrice" | "isFrom" | "images" | "highlights" | "included" | "excluded" | "optional" | "itineraryGlance" | "itineraryDetail" | "additionalInfo" | "mapUrl" | "featured" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["circuit"]>
   export type CircuitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     favorites?: boolean | Circuit$favoritesArgs<ExtArgs>
     _count?: boolean | CircuitCountOutputTypeDefaultArgs<ExtArgs>
@@ -1974,6 +1996,8 @@ export namespace Prisma {
       duration: number
       category: string
       price: number
+      originalPrice: number | null
+      isFrom: boolean
       images: string[]
       highlights: string[]
       included: string[]
@@ -2388,6 +2412,8 @@ export namespace Prisma {
     readonly duration: FieldRef<"Circuit", 'Int'>
     readonly category: FieldRef<"Circuit", 'String'>
     readonly price: FieldRef<"Circuit", 'Float'>
+    readonly originalPrice: FieldRef<"Circuit", 'Float'>
+    readonly isFrom: FieldRef<"Circuit", 'Boolean'>
     readonly images: FieldRef<"Circuit", 'String[]'>
     readonly highlights: FieldRef<"Circuit", 'String[]'>
     readonly included: FieldRef<"Circuit", 'String[]'>
@@ -11047,6 +11073,8 @@ export namespace Prisma {
     duration: 'duration',
     category: 'category',
     price: 'price',
+    originalPrice: 'originalPrice',
+    isFrom: 'isFrom',
     images: 'images',
     highlights: 'highlights',
     included: 'included',
@@ -11295,6 +11323,8 @@ export namespace Prisma {
     duration?: IntFilter<"Circuit"> | number
     category?: StringFilter<"Circuit"> | string
     price?: FloatFilter<"Circuit"> | number
+    originalPrice?: FloatNullableFilter<"Circuit"> | number | null
+    isFrom?: BoolFilter<"Circuit"> | boolean
     images?: StringNullableListFilter<"Circuit">
     highlights?: StringNullableListFilter<"Circuit">
     included?: StringNullableListFilter<"Circuit">
@@ -11320,6 +11350,8 @@ export namespace Prisma {
     duration?: SortOrder
     category?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
+    isFrom?: SortOrder
     images?: SortOrder
     highlights?: SortOrder
     included?: SortOrder
@@ -11348,6 +11380,8 @@ export namespace Prisma {
     duration?: IntFilter<"Circuit"> | number
     category?: StringFilter<"Circuit"> | string
     price?: FloatFilter<"Circuit"> | number
+    originalPrice?: FloatNullableFilter<"Circuit"> | number | null
+    isFrom?: BoolFilter<"Circuit"> | boolean
     images?: StringNullableListFilter<"Circuit">
     highlights?: StringNullableListFilter<"Circuit">
     included?: StringNullableListFilter<"Circuit">
@@ -11373,6 +11407,8 @@ export namespace Prisma {
     duration?: SortOrder
     category?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
+    isFrom?: SortOrder
     images?: SortOrder
     highlights?: SortOrder
     included?: SortOrder
@@ -11405,6 +11441,8 @@ export namespace Prisma {
     duration?: IntWithAggregatesFilter<"Circuit"> | number
     category?: StringWithAggregatesFilter<"Circuit"> | string
     price?: FloatWithAggregatesFilter<"Circuit"> | number
+    originalPrice?: FloatNullableWithAggregatesFilter<"Circuit"> | number | null
+    isFrom?: BoolWithAggregatesFilter<"Circuit"> | boolean
     images?: StringNullableListFilter<"Circuit">
     highlights?: StringNullableListFilter<"Circuit">
     included?: StringNullableListFilter<"Circuit">
@@ -12084,6 +12122,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice?: number | null
+    isFrom?: boolean
     images?: CircuitCreateimagesInput | string[]
     highlights?: CircuitCreatehighlightsInput | string[]
     included?: CircuitCreateincludedInput | string[]
@@ -12109,6 +12149,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice?: number | null
+    isFrom?: boolean
     images?: CircuitCreateimagesInput | string[]
     highlights?: CircuitCreatehighlightsInput | string[]
     included?: CircuitCreateincludedInput | string[]
@@ -12133,6 +12175,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]
@@ -12157,6 +12201,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]
@@ -12182,6 +12228,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice?: number | null
+    isFrom?: boolean
     images?: CircuitCreateimagesInput | string[]
     highlights?: CircuitCreatehighlightsInput | string[]
     included?: CircuitCreateincludedInput | string[]
@@ -12205,6 +12253,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]
@@ -12228,6 +12278,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]
@@ -13021,17 +13073,29 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -13064,6 +13128,8 @@ export namespace Prisma {
     duration?: SortOrder
     category?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
+    isFrom?: SortOrder
     images?: SortOrder
     highlights?: SortOrder
     included?: SortOrder
@@ -13082,6 +13148,7 @@ export namespace Prisma {
   export type CircuitAvgOrderByAggregateInput = {
     duration?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
   }
 
   export type CircuitMaxOrderByAggregateInput = {
@@ -13093,6 +13160,8 @@ export namespace Prisma {
     duration?: SortOrder
     category?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
+    isFrom?: SortOrder
     itineraryDetail?: SortOrder
     additionalInfo?: SortOrder
     mapUrl?: SortOrder
@@ -13111,6 +13180,8 @@ export namespace Prisma {
     duration?: SortOrder
     category?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
+    isFrom?: SortOrder
     itineraryDetail?: SortOrder
     additionalInfo?: SortOrder
     mapUrl?: SortOrder
@@ -13123,6 +13194,7 @@ export namespace Prisma {
   export type CircuitSumOrderByAggregateInput = {
     duration?: SortOrder
     price?: SortOrder
+    originalPrice?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -13192,6 +13264,23 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -13662,6 +13751,19 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+    unset?: boolean
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type CircuitUpdateimagesInput = {
     set?: string[]
     push?: string | string[]
@@ -13690,10 +13792,6 @@ export namespace Prisma {
   export type CircuitUpdateitineraryGlanceInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -14002,6 +14100,18 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -14095,6 +14205,23 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -14405,6 +14532,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice?: number | null
+    isFrom?: boolean
     images?: CircuitCreateimagesInput | string[]
     highlights?: CircuitCreatehighlightsInput | string[]
     included?: CircuitCreateincludedInput | string[]
@@ -14429,6 +14558,8 @@ export namespace Prisma {
     duration: number
     category: string
     price: number
+    originalPrice?: number | null
+    isFrom?: boolean
     images?: CircuitCreateimagesInput | string[]
     highlights?: CircuitCreatehighlightsInput | string[]
     included?: CircuitCreateincludedInput | string[]
@@ -14505,6 +14636,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]
@@ -14528,6 +14661,8 @@ export namespace Prisma {
     duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    originalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    isFrom?: BoolFieldUpdateOperationsInput | boolean
     images?: CircuitUpdateimagesInput | string[]
     highlights?: CircuitUpdatehighlightsInput | string[]
     included?: CircuitUpdateincludedInput | string[]

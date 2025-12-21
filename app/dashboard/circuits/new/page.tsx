@@ -30,6 +30,8 @@ export default function AddCircuitPage() {
         itineraryGlance: [] as string[],
         itineraryDetail: "",
         additionalInfo: "",
+        originalPrice: "",
+        isFrom: false,
         optional: [] as string[],
         mapUrl: "",
         featured: false,
@@ -56,6 +58,8 @@ export default function AddCircuitPage() {
                     ...formData,
                     duration: parseInt(formData.duration),
                     price: parseFloat(formData.price),
+                    originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
+                    isFrom: !!formData.isFrom,
                 }),
             })
 
@@ -197,6 +201,28 @@ export default function AddCircuitPage() {
                                 required
                                 className="bg-background border-input"
                             />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="originalPrice">Original Price (optional)</Label>
+                            <Input
+                                id="originalPrice"
+                                type="number"
+                                step="0.01"
+                                value={formData.originalPrice}
+                                onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
+                                min="0"
+                                className="bg-background border-input"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label className="text-sm">Show as "From" price</Label>
+                            <div className="pt-2">
+                                <Switch
+                                    checked={formData.isFrom}
+                                    onCheckedChange={(checked) => setFormData({ ...formData, isFrom: checked })}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,6 @@
 "use client"
-
-import * as React from "react"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import * as Flags from "country-flag-icons/react/3x2"
 
 export const COUNTRY_CODES = [
     { code: "+212", country: "MA" },
@@ -73,6 +66,11 @@ export const COUNTRY_CODES = [
     { code: "+225", country: "CI" },
 ]
 
+function getFlagIcon(country: string) {
+    const FlagComponent = Flags[country as keyof typeof Flags]
+    return FlagComponent || Flags.MA // Fallback to MA flag if country not found
+}
+
 interface CountryCodeSelectProps {
     value: string
     onChange: (value: string) => void
@@ -80,20 +78,39 @@ interface CountryCodeSelectProps {
 }
 
 export function CountryCodeSelect({ value, onChange, disabled }: CountryCodeSelectProps) {
+    const selectedCountry = COUNTRY_CODES.find((item) => item.code === value)
+
     return (
         <Select value={value} onValueChange={onChange} disabled={disabled}>
-            <SelectTrigger className="w-[100px] h-11 bg-background border-input">
-                <SelectValue placeholder="Code" />
+            <SelectTrigger className="w-[110px] h-11">
+                <SelectValue placeholder="Code">
+                    {selectedCountry && (
+                        <span className="flex items-center gap-1.5">
+                            <span className="w-5 h-4 flex-shrink-0">
+                                {(() => {
+                                    const Flag = getFlagIcon(selectedCountry.country)
+                                    return <Flag className="w-full h-full rounded-sm" />
+                                })()}
+                            </span>
+                            <span className="font-mono text-sm">{selectedCountry.code}</span>
+                        </span>
+                    )}
+                </SelectValue>
             </SelectTrigger>
             <SelectContent>
-                {COUNTRY_CODES.map((item) => (
-                    <SelectItem key={item.code} value={item.code}>
-                        <span className="flex items-center gap-2">
-                            <span className="font-mono">{item.code}</span>
-                            <span className="text-xs text-muted-foreground">{item.country}</span>
-                        </span>
-                    </SelectItem>
-                ))}
+                {COUNTRY_CODES.map((item) => {
+                    const Flag = getFlagIcon(item.country)
+                    return (
+                        <SelectItem key={`${item.code}-${item.country}`} value={item.code}>
+                            <span className="flex items-center gap-2">
+                                <span className="w-5 h-4 flex-shrink-0">
+                                    <Flag className="w-full h-full rounded-sm" />
+                                </span>
+                                <span className="font-mono text-sm">{item.code}</span>
+                            </span>
+                        </SelectItem>
+                    )
+                })}
             </SelectContent>
         </Select>
     )

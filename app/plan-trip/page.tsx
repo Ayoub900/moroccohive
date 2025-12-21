@@ -313,12 +313,7 @@ export default function PlanTripPage() {
                             <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors" />
                             <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
                                 <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl flex-shrink-0">
-                                    <Image
-                                        src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200&h=200"
-                                        alt="Abdellatif"
-                                        fill
-                                        className="object-cover"
-                                    />
+                                    <Image src="/agent-2.jpeg" alt="Abdellatif" fill className="object-cover" />
                                 </div>
                                 <div className="text-left">
                                     <h3 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
@@ -326,7 +321,7 @@ export default function PlanTripPage() {
                                         <Sparkles className="w-5 h-5 text-primary opacity-50" />
                                     </h3>
                                     <p className="text-muted-foreground leading-relaxed text-sm italic">
-                                        &quot;Hello, I&apos;m Abdellatif, TravelLocal&apos;s personal contact! I&apos;ll walk you through
+                                        &quot;Hello, I&apos;m Abdellatif, Moroccohive&apos;s personal contact! I&apos;ll walk you through
                                         the form to construct your ideal tour over the course of the next three minutes. After you&apos;re
                                         done, a local expert will respond to you with a first customized travel suggestion in no more than
                                         48 hours (and often quicker).&quot;
@@ -349,10 +344,10 @@ export default function PlanTripPage() {
                                         <div className="flex flex-col items-center relative flex-1">
                                             <div
                                                 className={`w-12 h-12 rounded-full flex items-center justify-center border-1 transition-all ${isCompleted
-                                                    ? "bg-primary border-primary text-primary-foreground"
-                                                    : isActive
-                                                        ? "bg-primary/10 border-primary text-primary"
-                                                        : "bg-muted border-border text-muted-foreground"
+                                                        ? "bg-primary border-primary text-primary-foreground"
+                                                        : isActive
+                                                            ? "bg-primary/10 border-primary text-primary"
+                                                            : "bg-muted border-border text-muted-foreground"
                                                     }`}
                                             >
                                                 {isCompleted ? <Check className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
@@ -396,8 +391,8 @@ export default function PlanTripPage() {
                                                 type="button"
                                                 onClick={() => setFormData((prev) => ({ ...prev, travelStyle: style.toLowerCase() }))}
                                                 className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${formData.travelStyle === style.toLowerCase()
-                                                    ? "border-primary bg-primary/10 text-primary font-semibold shadow-lg"
-                                                    : "border-border hover:border-primary/50"
+                                                        ? "border-primary bg-primary/10 text-primary font-semibold shadow-lg"
+                                                        : "border-border hover:border-primary/50"
                                                     }`}
                                             >
                                                 <div className="flex justify-center mb-3">
@@ -626,7 +621,8 @@ export default function PlanTripPage() {
                                     <label className="block text-sm font-semibold mb-6 text-center">
                                         What is your preferred accommodation type?
                                     </label>
-                                    <div className="flex flex-wrap justify-center gap-12">
+                                    {/* CHANGE: Changed from flex-wrap to grid layout for 3 columns on all screens */}
+                                    <div className="grid grid-cols-3 justify-items-center gap-4 md:gap-8 lg:gap-12">
                                         {[
                                             {
                                                 name: "Standard",
@@ -661,28 +657,29 @@ export default function PlanTripPage() {
                                                 key={level.name}
                                                 type="button"
                                                 onClick={() => setFormData((prev) => ({ ...prev, accommodation: level.name.toLowerCase() }))}
-                                                className="flex flex-col cursor-pointer items-center group"
+                                                className="flex flex-col cursor-pointer items-center group w-full"
                                             >
+                                                {/* CHANGE: Made circle sizes responsive for mobile */}
                                                 <div
-                                                    className={`w-32 h-32 rounded-full border border-border/50 flex flex-col items-center justify-center transition-all duration-300 ${formData.accommodation === level.name.toLowerCase()
-                                                        ? "bg-primary/5 border-primary shadow-[0_0_20px_rgba(var(--primary),0.1)] scale-110"
-                                                        : "bg-card group-hover:border-primary/30 group-hover:bg-primary/[0.02]"
+                                                    className={`w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border border-border/50 flex flex-col items-center justify-center transition-all duration-300 ${formData.accommodation === level.name.toLowerCase()
+                                                            ? "bg-primary/5 border-primary shadow-[0_0_20px_rgba(var(--primary),0.1)] scale-110"
+                                                            : "bg-card group-hover:border-primary/30 group-hover:bg-primary/[0.02]"
                                                         }`}
                                                 >
-                                                    <div className="flex mb-3">
+                                                    <div className="flex mb-2 sm:mb-3">
                                                         {Array.from({ length: level.stars }).map((_, i) => (
                                                             <Star
                                                                 key={i}
-                                                                className={`w-2.5 h-2.5 fill-primary text-primary ${i > 0 ? "ml-0.5" : ""}`}
+                                                                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 fill-primary text-primary ${i > 0 ? "ml-0.5" : ""}`}
                                                             />
                                                         ))}
                                                     </div>
                                                     <level.icon
-                                                        className={`w-10 h-10 transition-colors duration-300 ${formData.accommodation === level.name.toLowerCase() ? "text-primary" : "text-muted-foreground/40"}`}
+                                                        className={`w-8 h-8 sm:w-10 sm:h-10 transition-colors duration-300 ${formData.accommodation === level.name.toLowerCase() ? "text-primary" : "text-muted-foreground/40"}`}
                                                     />
                                                 </div>
                                                 <span
-                                                    className={`mt-5 font-bold tracking-widest text-xs uppercase transition-all duration-300 ${formData.accommodation === level.name.toLowerCase() ? "text-primary scale-110" : "text-muted-foreground/70"}`}
+                                                    className={`mt-3 sm:mt-4 md:mt-5 font-bold tracking-widest text-[10px] sm:text-xs uppercase transition-all duration-300 ${formData.accommodation === level.name.toLowerCase() ? "text-primary scale-110" : "text-muted-foreground/70"}`}
                                                 >
                                                     {level.name}
                                                 </span>
@@ -721,22 +718,22 @@ export default function PlanTripPage() {
                                             <div
                                                 key={activity.name}
                                                 onClick={() => handleActivityToggle(activity.name)}
-                                                className={`flex items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.adventureActivities.includes(activity.name)
-                                                    ? "border-primary bg-primary/5"
-                                                    : "border-border"
+                                                className={`flex flex-col sm:flex-row items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.adventureActivities.includes(activity.name)
+                                                        ? "border-primary bg-primary/5"
+                                                        : "border-border"
                                                     }`}
                                             >
                                                 <div
-                                                    className={`w-6 h-6 rounded border-2 flex items-center justify-center mr-6 shrink-0 transition-colors ${formData.adventureActivities.includes(activity.name)
-                                                        ? "bg-primary border-primary"
-                                                        : "border-muted-foreground/30"
+                                                    className={`w-6 h-6 rounded border-2 flex items-center justify-center mb-3 sm:mb-0 sm:mr-6 shrink-0 transition-colors ${formData.adventureActivities.includes(activity.name)
+                                                            ? "bg-primary border-primary"
+                                                            : "border-muted-foreground/30"
                                                         }`}
                                                 >
                                                     {formData.adventureActivities.includes(activity.name) && (
                                                         <Check className="w-4 h-4 text-white" />
                                                     )}
                                                 </div>
-                                                <div className="relative w-32 h-20 rounded-lg overflow-hidden shrink-0 mr-6">
+                                                <div className="relative w-full sm:w-32 h-32 sm:h-20 rounded-lg overflow-hidden shrink-0 mb-3 sm:mb-0 sm:mr-6">
                                                     <Image
                                                         src={activity.image || "/placeholder.svg"}
                                                         alt={activity.name}
@@ -744,7 +741,7 @@ export default function PlanTripPage() {
                                                         className="object-cover"
                                                     />
                                                 </div>
-                                                <div>
+                                                <div className="text-center sm:text-left w-full">
                                                     <h4 className="font-bold text-lg mb-1">{activity.name}</h4>
                                                     <p className="text-sm text-muted-foreground font-light leading-relaxed">
                                                         {activity.description}
@@ -773,8 +770,8 @@ export default function PlanTripPage() {
                                                     }))
                                                 }}
                                                 className={`group relative cursor-pointer aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${formData.experiences.includes(exp.name)
-                                                    ? "border-primary shadow-lg scale-[1.02]"
-                                                    : "border-transparent hover:border-primary/40"
+                                                        ? "border-primary shadow-lg scale-[1.02]"
+                                                        : "border-transparent hover:border-primary/40"
                                                     }`}
                                             >
                                                 <Image
@@ -791,8 +788,8 @@ export default function PlanTripPage() {
                                                 </div>
                                                 <div
                                                     className={`absolute top-2 right-2 w-5 h-5 rounded-full border border-white/50 flex items-center justify-center transition-all ${formData.experiences.includes(exp.name)
-                                                        ? "bg-primary border-primary scale-110"
-                                                        : "bg-black/20"
+                                                            ? "bg-primary border-primary scale-110"
+                                                            : "bg-black/20"
                                                         }`}
                                                 >
                                                     {formData.experiences.includes(exp.name) && <Check className="w-3 h-3 text-white" />}
@@ -818,20 +815,20 @@ export default function PlanTripPage() {
                                                             : [...prev.importantFactors, factor.name],
                                                     }))
                                                 }}
-                                                className={`flex items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.importantFactors.includes(factor.name)
-                                                    ? "border-primary bg-primary/5"
-                                                    : "border-border"
+                                                className={`flex flex-col sm:flex-row items-center p-4 rounded-xl border-2 transition-all cursor-pointer hover:bg-accent/5 ${formData.importantFactors.includes(factor.name)
+                                                        ? "border-primary bg-primary/5"
+                                                        : "border-border"
                                                     }`}
                                             >
                                                 <div
-                                                    className={`w-5 h-5 rounded border-2 flex items-center justify-center mr-4 shrink-0 transition-colors ${formData.importantFactors.includes(factor.name)
-                                                        ? "bg-primary border-primary"
-                                                        : "border-muted-foreground/30"
+                                                    className={`w-5 h-5 rounded border-2 flex items-center justify-center mb-3 sm:mb-0 sm:mr-4 shrink-0 transition-colors ${formData.importantFactors.includes(factor.name)
+                                                            ? "bg-primary border-primary"
+                                                            : "border-muted-foreground/30"
                                                         }`}
                                                 >
                                                     {formData.importantFactors.includes(factor.name) && <Check className="w-3 h-3 text-white" />}
                                                 </div>
-                                                <div className="relative w-24 h-16 rounded-lg overflow-hidden shrink-0 mr-4">
+                                                <div className="relative w-full sm:w-24 h-32 sm:h-16 rounded-lg overflow-hidden shrink-0 mb-3 sm:mb-0 sm:mr-4">
                                                     <Image
                                                         src={factor.image || "/placeholder.svg"}
                                                         alt={factor.name}
@@ -839,9 +836,9 @@ export default function PlanTripPage() {
                                                         className="object-cover"
                                                     />
                                                 </div>
-                                                <div className="text-left">
+                                                <div className="text-center sm:text-left w-full">
                                                     <h4 className="font-bold text-sm mb-1">{factor.name}</h4>
-                                                    <p className="text-[12px] text-muted-foreground font-light leading-relaxed line-clamp-2">
+                                                    <p className="text-[12px] text-muted-foreground font-light leading-relaxed line-clamp-3 sm:line-clamp-2">
                                                         {factor.description}
                                                     </p>
                                                 </div>

@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CountryCodeSelect } from "@/components/ui/country-code-select"
 import { Textarea } from "@/components/ui/textarea"
+import { PriceBadge } from "@/components/ui/price-badge"
 
 interface Circuit {
     id: string
@@ -22,6 +23,8 @@ interface Circuit {
     description: string
     duration: number
     price: number
+    isFrom?: boolean
+    originalPrice?: number
     images: string[]
     highlights: string[]
     included: string[]
@@ -91,6 +94,7 @@ export default function CircuitDetailPage() {
                     budget: "N/A",
                     adventureActivities: [],
                     desiredExperiences: `Booking for circuit: ${circuit?.name} (${circuit?.slug})`,
+                    phone: `${booking.countryCode} ${booking.phone}`,
                 }),
             })
 
@@ -242,7 +246,7 @@ export default function CircuitDetailPage() {
                             {/* Itinerary - Minimal Timeline */}
                             {circuit.itineraryGlance.length > 0 && (
                                 <div className="bg-card rounded-lg p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                                    <h2 className="text-2xl font-semibold text-foreground mb-8">Itinerary</h2>
+                                    <h2 className="text-2xl font-semibold text-foreground mb-8">Itinerary Overview</h2>
                                     <div className="space-y-0 relative">
                                         {/* Timeline line */}
                                         {/* <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" /> */}
@@ -266,7 +270,7 @@ export default function CircuitDetailPage() {
                                         <div className="mt-10 pt-8 border-t border-border">
                                             <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
                                                 <Info className="w-5 h-5 text-accent" />
-                                                Detailed Program
+                                                Detailed Itinerary
                                             </h3>
                                             <div
                                                 className="prose prose-gray max-w-none text-muted-foreground leading-relaxed"
@@ -349,8 +353,10 @@ export default function CircuitDetailPage() {
                                         <div className="text-center">
                                             <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider">From</span>
                                             <div className="flex items-baseline justify-center gap-1 mt-2">
-                                                <span className="text-5xl font-bold text-foreground tracking-tight">${circuit.price}</span>
-                                                <span className="text-muted-foreground font-medium">/ person</span>
+                                                <div className="flex items-baseline gap-4">
+                                                    <PriceBadge price={circuit.price} originalPrice={circuit.originalPrice} from={circuit.isFrom} />
+                                                </div>
+                                                {/* <span className="text-muted-foreground font-medium">/ person</span> */}
                                             </div>
                                         </div>
 

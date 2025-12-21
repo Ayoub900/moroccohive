@@ -124,23 +124,6 @@ export default function BlogDetailPage() {
             {/* Content Section */}
             <article className="py-20 container mx-auto px-6">
                 <div className="max-w-3xl mx-auto">
-                    {/* Share bar */}
-                    <div className="flex items-center gap-4 mb-12 py-4 border-y border-border">
-                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mr-2">Share:</span>
-                        <button className="h-8 w-8 flex items-center justify-center rounded-full bg-muted hover:bg-primary hover:text-white transition-all">
-                            <Facebook className="h-4 w-4" />
-                        </button>
-                        <button className="h-8 w-8 flex items-center justify-center rounded-full bg-muted hover:bg-primary hover:text-white transition-all">
-                            <Twitter className="h-4 w-4" />
-                        </button>
-                        <button className="h-8 w-8 flex items-center justify-center rounded-full bg-muted hover:bg-primary hover:text-white transition-all">
-                            <Linkedin className="h-4 w-4" />
-                        </button>
-                        <button className="h-8 w-8 flex items-center justify-center rounded-full bg-muted hover:bg-primary hover:text-white transition-all">
-                            <Share2 className="h-4 w-4" />
-                        </button>
-                    </div>
-
                     {/* Main Content */}
                     <div
                         className="prose prose-lg max-w-none text-foreground/90 leading-relaxed"

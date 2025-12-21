@@ -23,13 +23,13 @@ import {
 
 const LOCAL_AGENTS = [
   {
-    name: "Elhoussain Iggui",
+    name: "Elhoussain",
     role: "Dedicated Tour Guide",
     image: "/agent-1.jpeg",
     description: "Hello dear travelers, Hello, my name is Elhoussain Iggui, and I have been a dedicated tour guide in Morocco since 1995, bringing over three decades of expertise to travelers seeking authentic adventures. Specializing in hiking tours, I expertly navigate the diverse landscapes of the Atlas Mountains, Rif ranges, and Sahara dunes, offering immersive experiences that blend cultural insights, scenic trails, and personalized itineraries. With a passion for Morocco's natural beauty and heritage, I ensure safe, memorable journeys for hikers of all levels, from casual treks to challenging expeditions, while sharing stories of local traditions and hidden gems along the way."
   },
   {
-    name: "Abdellatif Iggui",
+    name: "Abdellatif",
     role: "Professional Driver & Tour Guide",
     image: "/agent-2.jpeg",
     description: "Hello, my name is Abdellatif Iggui, and I have been a dedicated driver & tour guide in Morocco for over 7 years, specializing in organized trips across the entire country. With expertise as a professional driver, I lead immersive road trips that showcase Morocco's diverse landscapes, from the bustling cities of Casablanca and Marrakech to the serene Atlas Mountains and Sahara deserts. Having guided more than 210 tours with tourists from around the world, I ensure safe, seamless journeys filled with cultural insights, hidden gems, and personalized itineraries tailored to every adventurer's pace and interests."
@@ -276,8 +276,8 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
               <div>
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">Featured Journeys</h2>
-                <p className="text-muted-foreground mt-2 font-light">Popular experiences loved by travelers</p>
+                <h2 className="text-3xl font-bold text-foreground tracking-tight">Morocco Tours & Itineraries</h2>
+                <p className="text-muted-foreground mt-2 font-light">Get inspired by trips other travelers have loved</p>
               </div>
               <Link href="/circuits" className="flex items-center text-accent hover:text-accent/90 font-medium group text-sm">
                 View All Trips <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
@@ -381,7 +381,7 @@ export default function HomePage() {
               ].map((item, idx) => (
                 <div key={idx} className="relative z-10 bg-background border border-border/50 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow group overflow-hidden">
                   <div className="absolute top-0 right-0 p-4">
-                    <span className="text-4xl font-bold text-muted/20 group-hover:text-primary/10 transition-colors">{item.step}</span>
+                    <span className="text-4xl font-bold text-primary/20 transition-colors">{item.step}</span>
                   </div>
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
                     <item.icon className="w-6 h-6" />
@@ -487,7 +487,8 @@ export default function HomePage() {
           <div className="max-w-7xl justify-center mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="relative gap-4 p-4">
-                <div className="flex items-center gap-8 pt-4">
+                <div className="flex flex-col items-center gap-8 pt-4">
+                  <h2 className="text-2xl font-bold text-foreground tracking-tight">Our Local Agents in Morocco</h2>
 
                   {/* Agent Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
@@ -781,25 +782,25 @@ export default function HomePage() {
                 ) : (
                   <form onSubmit={handleContactSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Your Name</Label>
+                      <Label htmlFor="name" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Name</Label>
                       <Input
                         id="name"
                         value={contactForm.name}
                         onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                         required
-                        placeholder="John Doe"
+                        placeholder=""
                         className="bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Email Address</Label>
+                      <Label htmlFor="email" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Email</Label>
                       <Input
                         id="email"
                         type="email"
                         value={contactForm.email}
                         onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                         required
-                        placeholder="john@example.com"
+                        placeholder=""
                         className="bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
                       />
                     </div>
@@ -816,7 +817,7 @@ export default function HomePage() {
                           value={contactForm.phone}
                           onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
                           required
-                          placeholder="612345678"
+                          placeholder=""
                           className="flex-1 bg-background border-input h-11 rounded-md focus:ring-ring focus:border-ring"
                         />
                       </div>

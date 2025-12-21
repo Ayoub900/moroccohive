@@ -101,7 +101,7 @@ export default function ProfilePage() {
                         <div className="flex items-center justify-between">
                             <h2 className="text-2xl font-bold text-foreground flex items-center">
                                 <Heart className="w-6 h-6 mr-3 text-destructive fill-destructive" />
-                                My Favorite Circuits
+                                My Favorite Trips
                             </h2>
                             <p className="text-sm text-muted-foreground">{favorites.length} saved</p>
                         </div>
@@ -164,10 +164,10 @@ export default function ProfilePage() {
                                 </div>
                                 <h3 className="text-xl font-bold text-foreground mb-2">No favorites yet</h3>
                                 <p className="text-muted-foreground mb-8 max-w-xs mx-auto">
-                                    Save your favorite circuits to easily find them later and plan your dream trip.
+                                    Save your favorite trips to easily find them later and plan your dream trip.
                                 </p>
                                 <Link href="/circuits">
-                                    <Button className="bg-primary hover:bg-primary/90 text-white">Explore Circuits</Button>
+                                    <Button className="bg-primary hover:bg-primary/90 text-white">Explore Trips</Button>
                                 </Link>
                             </div>
                         )}

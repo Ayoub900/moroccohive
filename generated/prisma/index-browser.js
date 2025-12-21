@@ -123,6 +123,8 @@ exports.Prisma.CircuitScalarFieldEnum = {
   duration: 'duration',
   category: 'category',
   price: 'price',
+  originalPrice: 'originalPrice',
+  isFrom: 'isFrom',
   images: 'images',
   highlights: 'highlights',
   included: 'included',
