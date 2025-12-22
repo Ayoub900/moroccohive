@@ -275,36 +275,41 @@ export default function CircuitDetailPage() {
                             )}
 
                             {/* Itinerary - Minimal Timeline */}
-                            {circuit.itineraryGlance.length > 0 && (
-                                <div className="bg-card rounded-lg p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                                    <h2 className="text-2xl font-semibold text-foreground mb-8">Itinerary Overview</h2>
-                                    <div className="space-y-0 relative">
-                                        {/* Timeline line */}
-                                        {/* <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" /> */}
+                            <div className="bg-card rounded-lg p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                                {circuit.itineraryGlance.length > 0 && (
+                                    <>
+                                        <h2 className="text-2xl font-semibold text-foreground mb-8">Itinerary Overview</h2>
+                                        <div className="space-y-0 relative">
+                                            {/* Timeline line */}
+                                            {/* <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" /> */}
 
-                                        {circuit.itineraryGlance.map((day, index) => (
-                                            <div key={index} className="relative pl-12 pb-8 last:pb-0 group">
-                                                {/* Dot */}
-                                                <div className="absolute left-0 top-1.5 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center z-10 group-hover:border-accent/10 transition-colors">
-                                                    <div className="w-3 h-3 rounded-full bg-primary/40" />
+                                            {circuit.itineraryGlance.map((day, index) => (
+                                                <div key={index} className="relative pl-12 pb-8 last:pb-0 group">
+                                                    {/* Dot */}
+                                                    <div className="absolute left-0 top-1.5 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center z-10 group-hover:border-accent/10 transition-colors">
+                                                        <div className="w-3 h-3 rounded-full bg-primary/40" />
+                                                    </div>
+
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">Day {index + 1}</span>
+                                                        <h3 className="text-lg font-medium text-foreground">{day}</h3>
+                                                    </div>
                                                 </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
 
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">Day {index + 1}</span>
-                                                    <h3 className="text-lg font-medium text-foreground">{day}</h3>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
 
+                                <div className="mt-10 pt-8 border-t border-border">
+
+                                    {circuit.mapUrl && (
+                                        <div className="reletive w-full">
+                                            <Image src={circuit.mapUrl} alt="Map" width={400} height={400} className="object-contain rounded-lg mb-6" />
+                                        </div>
+                                    )}
                                     {circuit.itineraryDetail && (
-                                        <div className="mt-10 pt-8 border-t border-border">
-
-                                            {circuit.mapUrl && (
-                                                <div className="reletive w-full">
-                                                    <Image src={circuit.mapUrl} alt="Map" width={400} height={400} className="object-contain rounded-lg mb-6" />
-                                                </div>
-                                            )}
+                                        <>
                                             <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
                                                 <Info className="w-5 h-5 text-accent" />
                                                 Detailed Itinerary
@@ -313,10 +318,10 @@ export default function CircuitDetailPage() {
                                                 className="prose prose-gray max-w-none text-muted-foreground leading-relaxed"
                                                 dangerouslySetInnerHTML={{ __html: renderRichText(circuit.itineraryDetail) }}
                                             />
-                                        </div>
+                                        </>
                                     )}
                                 </div>
-                            )}
+                            </div>
 
                             {/* Additional Info */}
                             {circuit.additionalInfo && (

@@ -38,7 +38,6 @@ export default function AddCircuitPage() {
         active: true,
     })
 
-    const [currentImage, setCurrentImage] = useState("")
     const [currentHighlight, setCurrentHighlight] = useState("")
     const [currentIncluded, setCurrentIncluded] = useState("")
     const [currentExcluded, setCurrentExcluded] = useState("")
@@ -410,7 +409,7 @@ export default function AddCircuitPage() {
                     <ImageUpload
                         existingImages={formData.mapUrl ? [formData.mapUrl] : []}
                         onImagesAdd={(urls) => setFormData(prev => ({ ...prev, mapUrl: urls[0] }))}
-                        onRemoveImage={(idx) => removeFromArray("images", idx)}
+                        onRemoveImage={() => setFormData(prev => ({ ...prev, mapUrl: "" }))}
                         max={1}
                     />
                 </div>

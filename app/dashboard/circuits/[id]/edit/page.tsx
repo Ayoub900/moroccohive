@@ -441,7 +441,7 @@ export default function EditCircuitPage() {
                     <ImageUpload
                         existingImages={formData.mapUrl ? [formData.mapUrl] : []}
                         onImagesAdd={(urls) => setFormData(prev => ({ ...prev, mapUrl: urls[0] }))}
-                        onRemoveImage={(idx) => removeFromArray("images", idx)}
+                        onRemoveImage={() => setFormData(prev => ({ ...prev, mapUrl: "" }))}
                         max={1}
                     />
                 </div>
