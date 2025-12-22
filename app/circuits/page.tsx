@@ -106,7 +106,14 @@ export default function CircuitsPage() {
                                             <div className="mb-4">
                                                 <div className="flex items-center justify-between text-xs font-medium text-gray-400 uppercase tracking-widest mb-2">
                                                     <span>{circuit.duration} Days</span>
-                                                    <PriceBadge price={circuit.price} originalPrice={circuit.originalPrice} from={!!circuit.isFrom} />
+                                                    <div className="flex flex-col">
+                                                        <div className="flex flex-col items-baseline">
+                                                            <p className="text-xl text-foreground font-bold">${circuit.price} <span className="text-muted-foreground text-sm font-medium">/ person</span></p>
+                                                            {circuit.originalPrice != null && (
+                                                                <span className="text-sm text-muted-foreground line-through">${circuit.originalPrice}</span>
+                                                            )}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <h3 className="text-2xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors leading-tight">
                                                     {circuit.name}

@@ -41,6 +41,11 @@ export default function CircuitDetailPage() {
     const params = useParams()
     const [circuit, setCircuit] = useState<Circuit | null>(null)
     const [loading, setLoading] = useState(true)
+    const [travelers, setTravelers] = useState({
+        adults: 2,
+        children: 0,
+        infants: 0,
+    })
     const [error, setError] = useState<string | null>(null)
 
     // Booking Form State
@@ -61,6 +66,32 @@ export default function CircuitDetailPage() {
             fetchCircuit(params.slug as string)
         }
     }, [params.slug])
+
+    const handleTravelerChange = (type: "adults" | "children" | "infants", delta: number) => {
+        setTravelers((prev) => {
+            const newValue = Math.max(0, prev[type] + delta)
+            // Ensure at least 1 adult
+            if (type === "adults" && newValue < 1) return prev
+
+            const newTravelers = { ...prev, [type]: newValue }
+            const total = newTravelers.adults + newTravelers.children + newTravelers.infants
+
+            // Build the travelerAges string
+            const parts: string[] = []
+            if (newTravelers.adults > 0) parts.push(`${newTravelers.adults} adult${newTravelers.adults !== 1 ? "s" : ""}`)
+            if (newTravelers.children > 0)
+                parts.push(`${newTravelers.children} child${newTravelers.children !== 1 ? "ren" : ""}`)
+            if (newTravelers.infants > 0) parts.push(`${newTravelers.infants} infant${newTravelers.infants !== 1 ? "s" : ""}`)
+
+            setBooking((prev) => ({
+                ...prev,
+                numberOfTravelers: total,
+                travelerAges: parts.join(", "),
+            }))
+
+            return newTravelers
+        })
+    }
 
     const fetchCircuit = async (slug: string) => {
         try {
@@ -268,6 +299,12 @@ export default function CircuitDetailPage() {
 
                                     {circuit.itineraryDetail && (
                                         <div className="mt-10 pt-8 border-t border-border">
+
+                                            {circuit.mapUrl && (
+                                                <div className="reletive w-full">
+                                                    <Image src={circuit.mapUrl} alt="Map" width={400} height={400} className="object-contain rounded-lg mb-6" />
+                                                </div>
+                                            )}
                                             <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
                                                 <Info className="w-5 h-5 text-accent" />
                                                 Detailed Itinerary
@@ -414,16 +451,86 @@ export default function CircuitDetailPage() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="travelers" className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Travelers</Label>
-                                                <Input
-                                                    id="travelers"
-                                                    type="number"
-                                                    min="1"
-                                                    value={booking.numberOfTravelers}
-                                                    onChange={(e) => setBooking({ ...booking, numberOfTravelers: parseInt(e.target.value) })}
-                                                    required
-                                                    className="bg-gray-50 border-gray-100 rounded-md focus:ring-orange-200 h-11"
-                                                />
+                                                <label className="block text-sm font-semibold mb-3">Who will be traveling?</label>
+                                                <div className="space-y-4 bg-muted/30 p-6 rounded-lg border border-border">
+                                                    {/* Adults */}
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <div className="font-semibold text-foreground">Adults</div>
+                                                            <div className="text-sm text-muted-foreground">Above 12</div>
+                                                        </div>
+                                                        <div className="flex items-center gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("adults", -1)}
+                                                                disabled={travelers.adults <= 1}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">−</span>
+                                                            </button>
+                                                            <span className="text-lg font-semibold w-8 text-center">{travelers.adults}</span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("adults", 1)}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">+</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Children */}
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <div className="font-semibold text-foreground">Children</div>
+                                                            <div className="text-sm text-muted-foreground">Ages 2-12</div>
+                                                        </div>
+                                                        <div className="flex items-center gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("children", -1)}
+                                                                disabled={travelers.children <= 0}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">−</span>
+                                                            </button>
+                                                            <span className="text-lg font-semibold w-8 text-center">{travelers.children}</span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("children", 1)}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">+</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Infants */}
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <div className="font-semibold text-foreground">Infants</div>
+                                                            <div className="text-sm text-muted-foreground">Under 2</div>
+                                                        </div>
+                                                        <div className="flex items-center gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("infants", -1)}
+                                                                disabled={travelers.infants <= 0}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">−</span>
+                                                            </button>
+                                                            <span className="text-lg font-semibold w-8 text-center">{travelers.infants}</span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTravelerChange("infants", 1)}
+                                                                className="w-10 h-10 rounded-full border-2 border-border hover:border-primary flex items-center justify-center transition-all hover:bg-primary/10"
+                                                            >
+                                                                <span className="text-xl font-semibold">+</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div className="space-y-2">

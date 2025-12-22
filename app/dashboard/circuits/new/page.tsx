@@ -216,7 +216,7 @@ export default function AddCircuitPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label className="text-sm">Show as "From" price</Label>
+                            <Label className="text-sm">Show as &quot;From&quot; price</Label>
                             <div className="pt-2">
                                 <Switch
                                     checked={formData.isFrom}
@@ -229,7 +229,7 @@ export default function AddCircuitPage() {
 
                 {/* Images */}
                 <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-                    <h2 className="text-lg font-semibold text-foreground">Circuit Images</h2>
+                    <h2 className="text-lg font-semibold text-foreground">Circuit Image</h2>
                     <ImageUpload
                         existingImages={formData.images}
                         onImagesAdd={(urls) => setFormData(prev => ({ ...prev, images: [...prev.images, ...urls] }))}
@@ -239,7 +239,6 @@ export default function AddCircuitPage() {
                 </div>
 
                 {/* Highlights, Included, Excluded */}
-                {/* ... (Kept as is, but ensuring context matches for diff) ... */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-card border border-border rounded-lg p-6 space-y-4">
                         <h3 className="font-semibold text-foreground">Highlights</h3>
@@ -403,6 +402,17 @@ export default function AddCircuitPage() {
                             </div>
                         )}
                     </div>
+                </div>
+
+                {/* Map Image */}
+                <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+                    <h2 className="text-lg font-semibold text-foreground">Map Image</h2>
+                    <ImageUpload
+                        existingImages={formData.mapUrl ? [formData.mapUrl] : []}
+                        onImagesAdd={(urls) => setFormData(prev => ({ ...prev, mapUrl: urls[0] }))}
+                        onRemoveImage={(idx) => removeFromArray("images", idx)}
+                        max={1}
+                    />
                 </div>
 
                 {/* Rich Text Fields */}

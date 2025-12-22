@@ -307,7 +307,7 @@ export default function HomePage() {
                           <div className="flex items-center justify-center h-full text-gray-400 text-sm">No Image</div>
                         )}
                         <div className="absolute top-4 left-4">
-                          <span className="inline-block px-3 py-1 rounded-md bg-accent/10 text-xs font-semibold text-accent tracking-wide shadow-sm">
+                          <span className="inline-block px-3 py-1 rounded-md bg-white/90 text-xs font-semibold text-accent tracking-wide shadow-sm">
                             {circuit.category}
                           </span>
                         </div>
